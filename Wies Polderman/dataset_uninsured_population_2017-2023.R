@@ -1,3 +1,4 @@
+#this is me importing the data of the population of the uninsured population from 2010-2023 but 2020 as that data does not exist
 ACSST1Y2017_S2702_2025_06_03T123200 <- read.csv("ACSST1Y2017_S2702_2025_06_03T123200.csv")
 dataset_uninsured_population_2017 = read.csv("ACSST1Y2017_S2702_2025_06_03T123200.csv")
 ACSST1Y2017_S2702_2025_06_03T123200 <- read_csv("ACSST1Y2017.S2702-2025-06-03T123200.csv")
@@ -15,3 +16,7 @@ dataset_uninsured_population_2023 = read_csv("ACSST1Y2023.S2702-2025-06-03T12265
 ACSST1Y2021_S2702_2025_06_03T122952 <- read_csv("ACSST1Y2021.S2702-2025-06-03T122952.csv")
 dataset_uninsured_population_2022 = read_csv("ACSST1Y2021.S2702-2025-06-03T122952.csv")
 View(Table_1_)
+
+
+
+

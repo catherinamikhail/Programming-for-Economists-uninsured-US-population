@@ -1,4 +1,4 @@
-#this is me cleaning out the rows with unnecessary metadate and keeping household income levels and the total population numbers
+#this is me cleaning out the rows with unnecessary metadata and keeping household income levels and the total population numbers
 dataset_uninsured_population_2010 <- dataset_uninsured_population_2010[-c(112:120),]
 View(dataset_uninsured_population_2010)
 

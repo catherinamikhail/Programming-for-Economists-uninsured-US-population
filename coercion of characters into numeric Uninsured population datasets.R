@@ -300,3 +300,6 @@ View(dataset_uninsured_population_2023_cleaned)
 class(dataset_uninsured_population_2023_cleaned)
 class(dataset_uninsured_population_2023_cleaned[[2]])
 
+#checking if the values in the GDP data set are numeric or character
+class(GDP_growth_rates_2010_2023_Table_3_[[3]])
+#it is indeed numeric

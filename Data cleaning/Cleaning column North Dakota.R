@@ -1,3 +1,4 @@
+#This is me cleaning out the columns of North Dakota
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2010)))]
 View(dataset_uninsured_population_2010)
 

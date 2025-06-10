@@ -3,6 +3,7 @@ title: "Rmarkdown try"
 output: html_document
 date: "2025-06-10"
 ---
+
 #Rmarkdown Percentage Uninsured Population in the US
 
 ##Here we were inserting and naming the data of the uninsured US population from the years 2010-2023, except for 2020
@@ -43,6 +44,7 @@ dataset_uninsured_population_2022 = read_csv("ACSST1Y2021.S2702-2025-06-03T12295
 ```
 
 #After that we inserted the real GDP table of the states in dollars of which we had the uninsured population data for every year from 2009-2023, except for 2020 and calculated a new variable: GDP growth rate per year and per state
+
 ```{r}
 #Here I am making a new variable which is the GDP growth rate of the states
 
@@ -79,6 +81,7 @@ View(gdp_growth)
 ```
 
 ##After that we started cleaning our data of the uninsured population, starting with "Margin of error"
+
 ```{r}
 # This is me cleaning out the data insured population from 2010-2016 getting out the margin of error
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2010)))]
@@ -123,6 +126,7 @@ View(dataset_uninsured_population_2023)
 ```
 
 #In the rows, there were also a lot of unnecessary metdata like age, race, gender etc. We took all the metadate out except for Household income as we have used it later for our sub-population analysis
+
 ```{r}
 #this is me cleaning out the rows with unnecessary metadata and keeping household income levels and the total population numbers
 dataset_uninsured_population_2010 <- dataset_uninsured_population_2010[-c(2:104),]
@@ -205,6 +209,7 @@ View(dataset_uninsured_population_2023)
 ```
 
 #Then we have found out that there were missing data from some states for several years, so for the integrity of our analysis, we decided to take all the states out with incomplete data
+
 ```{r}
 #This is me cleaning out the columns of Delaware
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2010)))]
@@ -520,7 +525,8 @@ dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!g
 View(dataset_uninsured_population_2023)
 ```
 
-##After taking out the unnecessary metadata and the states of which we have incomplete data, we found out that the values in these dataframes were stored as characters. To be able to work with these values, we have coerced them into numeric. 
+##After taking out the unnecessary metadata and the states of which we have incomplete data, we found out that the values in these dataframes were stored as characters. To be able to work with these values, we have coerced them into numeric.
+
 ```{r}
 #The values in the datasets of the uninsured population are stored as characters. Here I am going to get rid of "" so I can store them as numeric.
 
@@ -825,7 +831,9 @@ class(dataset_uninsured_population_2023_cleaned)
 class(dataset_uninsured_population_2023_cleaned[[2]])
 
 ```
+
 #Now it is time to make a new variable called "Total Uninsured Share" for every state in every year
+
 ```{r}
 #Here I am trying to compute and create a new variable, which is the share of uninsured population per state and per year
 
@@ -1615,8 +1623,8 @@ View(df_pop_2023)
 
 ```
 
-
 #Now that we have the seperate cleaned dataframes with values that are stored as numeric including the new variable, we are merging here all the dataframes of the uninsured population of all the years in one long-format dataframe
+
 ```{r}
 library(dplyr)
 library(stringr)
@@ -1707,7 +1715,9 @@ head(all_states)
 write.csv(all_states, "Data cleaning/all_states_merged.csv", row.names = FALSE)
 
 ```
+
 ##Now, I will multiply all the "Uninsured Shares" by 100, as we found out here that they were not already and this would make plotting our tables in graphs easier
+
 ```{r}
 #Here I am multiplying the uninsured share by 100, such that they are representing percentages
 library(dplyr)
@@ -1717,9 +1727,10 @@ all_states_100 = all_states %>%
                         series), value*100, value))
 ```
 
-#We have now this one big dataframe of the uninsured population that we can work with for the visualizations. Now, it is time to make subsets 
+#We have now this one big dataframe of the uninsured population that we can work with for the visualizations. Now, it is time to make subsets
 
 ##We start first with making the subsets for the spatial visualization
+
 ```{r}
 #Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data
 
@@ -1734,6 +1745,7 @@ spatial_df = spatial_df[-c(45:396),]
 ```
 
 ##After that, we are making the subsets for the temporal visualization. Here we chose to take the mean of the uninsured shares of the states with complete data of all the years. Besides that, we calculated the mean of the real GDP growth rates of the states that we are using in our analysis.
+
 ```{r}
 #Here I am making a sub dataframe for the temporal visualization with the mean of the US uninsured share per year
 
@@ -1751,6 +1763,7 @@ us_gdp = gdp_growth %>%
 ```
 
 ##After that, we are now making subsets for the sub-group analysis, where we compare the share of the uninsured population of the lowest income level with the population of the highest income level
+
 ```{r}
 #Here I am making a sub-dataframe for the sub-population visualization where we compare uninsured shares of people with the lowest income level of under the 25,000 dollars and the highest income level of 100,000 dollars and over
  
@@ -1761,6 +1774,7 @@ us_gdp = gdp_growth %>%
 ```
 
 ##Then, we are making the subsets for the event analysis. Here we chose to analyse the impact of stricter employment conditions for Medicaid on the share of uninsured population in Arkansas, as these conditions were implemented by Arkansas in the US. We compare this with the mean of the share of the uninsured population in the other states, which we have already computed before for the temporal visualization
+
 ```{r}
 #Here I am making a sub dataframe for the event analysis of the implementation of stricter conditions for Medicaid in 2018 in Arkansas
 

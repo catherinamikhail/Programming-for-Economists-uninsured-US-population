@@ -85,3 +85,5 @@ head(all_states)
 
 # Optional: save
 write.csv(all_states, "Data cleaning/all_states_merged.csv", row.names = FALSE)
+
+

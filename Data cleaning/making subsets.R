@@ -17,20 +17,50 @@ temp_df = all_states %>%
   group_by(year)%>%
   summarise(mean_uninsured = mean(value, na.rm = TRUE))
 
-#Here I am making a sub-dataframe for the temporal visualization with the GDP growth rates of the US from 2010-2023 except for 2020
+#Here I am making a sub-dataframe for the temporal visualization with the GDP growth rates of the states in the US of which we have the data from 2010-2023 except for 2020
 us_gdp = gdp_growth %>%
-  filter(GeoName == "United States")%>%
-  select(year, growth_rate)
+  filter(GeoName != "United States")%>%
+  group_by(year) %>%
+  summarise(mean_gdp = mean(gdp, na.rm = TRUE),
+            mean_growth_rate = mean(growth_rate, na.rm = TRUE))
 
 #Here I am making a sub-dataframe for the sub-population visualization where we compare uninsured shares of people with the lowest income level of under the 25,000 dollars and the highest income level of 100,000 dollars and over
-low_income_share = all_states %>%
-  filter(year == 2023, `Label (Grouping)` =="Under$25,000", series=="Total.Uninsured") 
+ 
+#sub dataframe under $25,000 with the total uninsured share values (you can choose a year) 
 
-  
-
-str(all_states_100)
+#sub dataframe $100,000 and over with the total uninsured share values (you can choose a year)
 
 
+
+
+#Here I am making a sub dataframe for the event analysis of the implementation of stricter conditions for Medicaid in 2018 in Arkansas
+
+#sub dataframe Arkansas share uninsured for all the years
+arkansas_event =  all_states %>%
+  filter(state == "Arkansas", series == "Uninsured.Share") %>%
+  select(state,year, value)
+
+#deleting rows
+arkansas_event = arkansas_event[-c(2:9),]
+arkansas_event = arkansas_event[-c(3:10),]
+arkansas_event = arkansas_event[-c(4:11),]
+arkansas_event = arkansas_event[-c(5:12),]
+arkansas_event = arkansas_event[-c(6:13),]
+arkansas_event = arkansas_event[-c(7:14),]
+arkansas_event = arkansas_event[-c(8:15),]
+arkansas_event = arkansas_event[-c(9:16),]
+arkansas_event = arkansas_event[-c(10:17),]
+arkansas_event = arkansas_event[-c(11:18),]
+arkansas_event = arkansas_event[-c(12:19),]
+arkansas_event = arkansas_event[-c(13:20),]
+arkansas_event = arkansas_event[-c(14:21),]
+
+View(arkansas_event)
+
+
+#sub dataframe the mean of the US share uninsured for all the years (this is already done before, you do not have to do this!!)
+#this sub dataframe is the same as temp_df, so you do not have to compute this one
+View(temp_df)
 
 
 

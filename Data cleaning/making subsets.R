@@ -10,7 +10,17 @@ spatial_df = all_states %>%
 spatial_df = spatial_df[-c(45:396),]
 
 
-#Here I am making a sub dataframe for the temporal visualization with the mean of the US uninsured share per year
+#Here I am making a sub dataframe for the temporal visualization with the weighted average of the US uninsured share per year
+library(dplyr)
+total_df = all_states_100 %>% 
+  filter(series == "Total")
+uninsured_share_df = all_states_100 %>%
+  filter(series == "Uninsured.Share")
+
+weighted_avg_states = uninsured_share_df %>%
+  inner_join(total_df, by = c("year", "state"), suffix = c("_uninsured", "_total"))%>%
+  group_by(year) %>%
+  summarise(weighted_avg_uninsured_share = weighted.mean(value_uninsured, value_total))
 
 temp_df = all_states %>%
   filter(series == "Uninsured.Share") %>%
@@ -74,31 +84,4 @@ View(temp_df)
 
 
 
-
-#here I am visualizing the spatial variation of the US of the share of uninsured population in 2023
-install.packages("sf")
-library(sf)
-install.packages("geojsonR")
-library(geojsonR)
-install.packages("usmap")
-library(sf)
-library(ggplot2)
-library(dplyr)
-library(usmap)  # for convenience
-
-# Get shapefile for US states as sf object
-us_states <- usmap::us_map("states") %>%
-  st_as_sf()
-
-# Merge your data
-us_states <- us_states %>%
-  mutate(state = tolower(full)) %>%
-  left_join(spatial_df, by = "state")
-
-# Plot
-ggplot(us_states) +
-  geom_sf(aes(fill = value), color = "white") +
-  scale_fill_continuous(type = "viridis") +
-  theme_void() +
-  labs(title = "US Share Uninsured Population, 2023")
 

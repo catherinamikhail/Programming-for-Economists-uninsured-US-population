@@ -1,7 +1,8 @@
 ---
-title: "Rmarkdown try"
+title: "Rmarkdown first"
 output: html_document
 date: "2025-06-10"
+author: "Catherina Mikhail, 2847118"
 ---
 
 #Rmarkdown Percentage Uninsured Population in the US
@@ -9,7 +10,7 @@ date: "2025-06-10"
 ##Here we were inserting and naming the data of the uninsured US population from the years 2010-2023, except for 2020
 
 ```{r}
-getwd()
+getwd(/OneDrive/Documenten/GitHub/Programming-for-Economists-uninsured-US-population )
 library(readr)
 ACSST1Y2010_S2702_2025_06_03T123607 <- read_csv("ACSST1Y2010.S2702-2025-06-03T123607.csv")
 dataset_uninsured_population_2010 = read_csv("ACSST1Y2010.S2702-2025-06-03T123607.csv")

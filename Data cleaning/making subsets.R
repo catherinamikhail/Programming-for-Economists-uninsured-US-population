@@ -52,11 +52,14 @@ us_gdp = gdp_growth %>%
 
 #Here I am making a sub-dataframe for the sub-population visualization where we compare uninsured shares of people with the lowest income level of under the 25,000 dollars and the highest income level of 100,000 dollars and over
  
-#sub dataframe under $25,000 with the total uninsured share values (you can choose a year) 
+#sub dataframe $25,000 to $49,999 with the total uninsured share values (2017) 
+middle_income = all_states_100[ all_states_100$income_group == ("$25,000 to $49,999"),]
 
 #sub dataframe $100,000 and over with the total uninsured share values (you can choose a year)
-
-
+high_income = all_states_100[ all_states_100$income_group == ("$100,000 and over"),]
+                        
+                         year == 2021 &
+                         series == "Total.Uninsured")
 
 
 #Here I am making a sub dataframe for the event analysis of the implementation of stricter conditions for Medicaid in 2018 in Arkansas

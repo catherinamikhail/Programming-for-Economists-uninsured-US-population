@@ -1,0 +1,89 @@
+---
+title: "template.Rmd"
+output: pdf_document
+date: "2025-06-11"
+---
+
+---
+title: "Visualizing the Uninsured: A Data Science Perspective on U.S. Health Coverage"
+author: |
+  Eduardo Sáenz-Messía Laborda  
+  Catherina Mikhail (2847118)  
+  Charlotte Craenen (2865572)  
+  Hugo van As  
+  Indy Pleijter  
+  Julian Zeguers  
+  Wies Polderman  
+  Tutorial group 5, group 4 – J.F. Fitzgerald
+date: "2025-06-24"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+---
+
+# Part 1 – Identify a Social Problem
+
+## 1.1 Describe the Social Problem
+
+The high number of uninsured Americans is a persistent issue with substantial social and economic consequences. According to the U.S. Census Bureau, over 27 million Americans lacked health insurance in 2022. This lack of coverage can lead to delayed medical care, poor health outcomes, and financial instability.
+
+## 1.2 Provide Background on the Problem
+
+Since the implementation of the Affordable Care Act (ACA) in 2010, the number of uninsured has decreased, but disparities remain. People with low income, people of color, and those living in states that did not expand Medicaid are disproportionately affected. Health insurance in the U.S. is often tied to employment, further complicating access for those in part-time, temporary, or informal jobs.
+
+# Part 2 – Describe and Acquire Data
+
+## 2.1 Describe the Dataset
+
+The dataset used is derived from the United States Census Bureau and includes individual-level data on health insurance coverage, demographics, and employment status.
+
+## 2.2 Import and Prepare the Dataset
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readr)
+# library(ggplot2) # for later use
+```
+
+```{r import-data}
+# Example of data import
+# dataset <- read_csv("data/uninsured_2022.csv")
+```
+
+# Part 3 – Visualize and Analyze the Data
+
+## 3.1 Create Initial Visualizations
+
+```{r visualize}
+# ggplot(dataset, aes(x = age, fill = insurance_status)) +
+#   geom_histogram(binwidth = 5) +
+#   labs(title = "Insurance Status by Age", x = "Age", y = "Count")
+```
+
+## 3.2 Identify Trends and Patterns
+
+The uninsured rate is higher among younger adults, Hispanic and Black populations, and those with lower income or educational attainment.
+
+# Part 4 – Communicate Findings
+
+## 4.1 Summarize Key Insights
+
+Our analysis highlights systemic inequalities in access to health insurance. Despite overall improvements since the ACA, millions remain uninsured.
+
+## 4.2 Propose Solutions or Policy Recommendations
+
+Potential solutions include:
+
+-   Expanding Medicaid in all states
+-   Decoupling health insurance from employment
+-   Increasing subsidies for marketplace plans
+
+# Appendix
+
+## A.1 References
+
+-   U.S. Census Bureau. (2022). Health Insurance Coverage in the United States.
+-   Kaiser Family Foundation. (2023). Key Facts about the Uninsured Population.
+
+## A.2 Session Info

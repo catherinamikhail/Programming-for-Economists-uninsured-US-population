@@ -1,14 +1,24 @@
 #Here I am trying to plot the spatial subset
 
-library(ggplot2)
+################################################################################
+
+library(maps)
 library(dplyr)
-ggplot(us_map, aes(x = long, y =lat, group = group)) + geom_polygon(aes(fill = value)) + 
-  scale_fill_gradient(low = "lightblue", high = "red", na.value = "white") + ggtitle("Share of Uninsured Population US, 2023") + guides(fill = guide_colorbar(title = "Percentage Share Uninsured"))
+library(ggplot2)
 
-match(us_map$region, spatial_df$state)
+#getting the US map
+us_map = map_data("state")
 
-us_map$region = tolower(trimws(us_map$region))
-spatial_df$state = tolower(trimws(spatial_df$state))
+#clean up states names in both datasets
+us_map$region = tolower(us_map$region)
+spatial_df$state = tolower(spatial_df$state)
 
+#join the map data with the subset data
 us_map = left_join(us_map, spatial_df, by = c("region" = "state"))
 
+#plot the map
+ggplot(us_map, aes(x = long, y = lat, group = group, fill = value)) + 
+  geom_polygon() +
+  scale_fill_gradient(low = "lightblue", high = "red", na.value = "white")+
+  ggtitle("Share of Uninsured Population in the US, 2023")+
+  labs(fill = "(%) Share of Uninsured Population")

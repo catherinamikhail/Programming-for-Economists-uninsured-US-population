@@ -21,4 +21,5 @@ ggplot(us_map, aes(x = long, y = lat, group = group, fill = value)) +
   geom_polygon() +
   scale_fill_gradient(low = "lightblue", high = "red", na.value = "white")+
   ggtitle("Share of Uninsured Population in the US, 2023")+
-  labs(fill = "(%) Share of Uninsured Population")
+  labs(fill = "(%) Share of Uninsured Population") + 
+  theme_void()

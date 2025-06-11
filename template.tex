@@ -1,0 +1,223 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Visualizing the Uninsured: A Data Science Perspective on U.S. Health Coverage},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Visualizing the Uninsured: A Data Science Perspective on U.S.
+Health Coverage}
+\author{Eduardo Sáenz-Messía Laborda\\
+Catherina Mikhail (2847118)\\
+Charlotte Craenen (2865572)\\
+Hugo van As\\
+Indy Pleijter\\
+Julian Zeguers\\
+Wies Polderman\\
+Tutorial group 5, group 4 -- J.F. Fitzgerald}
+\date{2025-06-24}
+
+\begin{document}
+\maketitle
+
+\section{Part 1 -- Identify a Social
+Problem}\label{part-1-identify-a-social-problem}
+
+\subsection{1.1 Describe the Social
+Problem}\label{describe-the-social-problem}
+
+The high number of uninsured Americans is a persistent issue with
+substantial social and economic consequences. According to the U.S.
+Census Bureau, over 27 million Americans lacked health insurance in
+2022. This lack of coverage can lead to delayed medical care, poor
+health outcomes, and financial instability.
+
+\subsection{1.2 Provide Background on the
+Problem}\label{provide-background-on-the-problem}
+
+Since the implementation of the Affordable Care Act (ACA) in 2010, the
+number of uninsured has decreased, but disparities remain. People with
+low income, people of color, and those living in states that did not
+expand Medicaid are disproportionately affected. Health insurance in the
+U.S. is often tied to employment, further complicating access for those
+in part-time, temporary, or informal jobs.
+
+\section{Part 2 -- Describe and Acquire
+Data}\label{part-2-describe-and-acquire-data}
+
+\subsection{2.1 Describe the Dataset}\label{describe-the-dataset}
+
+The dataset used is derived from the United States Census Bureau and
+includes individual-level data on health insurance coverage,
+demographics, and employment status.
+
+\subsection{2.2 Import and Prepare the
+Dataset}\label{import-and-prepare-the-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example of data import}
+\CommentTok{\# dataset \textless{}{-} read\_csv("data/uninsured\_2022.csv")}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Part 3 -- Visualize and Analyze the
+Data}\label{part-3-visualize-and-analyze-the-data}
+
+\subsection{3.1 Create Initial
+Visualizations}\label{create-initial-visualizations}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ggplot(dataset, aes(x = age, fill = insurance\_status)) +}
+\CommentTok{\#   geom\_histogram(binwidth = 5) +}
+\CommentTok{\#   labs(title = "Insurance Status by Age", x = "Age", y = "Count")}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{3.2 Identify Trends and
+Patterns}\label{identify-trends-and-patterns}
+
+The uninsured rate is higher among younger adults, Hispanic and Black
+populations, and those with lower income or educational attainment.
+
+\section{Part 4 -- Communicate
+Findings}\label{part-4-communicate-findings}
+
+\subsection{4.1 Summarize Key Insights}\label{summarize-key-insights}
+
+Our analysis highlights systemic inequalities in access to health
+insurance. Despite overall improvements since the ACA, millions remain
+uninsured.
+
+\subsection{4.2 Propose Solutions or Policy
+Recommendations}\label{propose-solutions-or-policy-recommendations}
+
+Potential solutions include:
+
+\begin{itemize}
+\tightlist
+\item
+  Expanding Medicaid in all states
+\item
+  Decoupling health insurance from employment
+\item
+  Increasing subsidies for marketplace plans
+\end{itemize}
+
+\section{Appendix}\label{appendix}
+
+\subsection{A.1 References}\label{a.1-references}
+
+\begin{itemize}
+\tightlist
+\item
+  U.S. Census Bureau. (2022). Health Insurance Coverage in the United
+  States.
+\item
+  Kaiser Family Foundation. (2023). Key Facts about the Uninsured
+  Population.
+\end{itemize}
+
+\subsection{A.2 Session Info}\label{a.2-session-info}
+
+\end{document}

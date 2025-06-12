@@ -33,13 +33,13 @@ rest_states_event = all_states_100 %>%
   summarise(weighted_avg = sum(Uninsured.Share * Total, na.rm = TRUE/sum(Total, na.rm = TRUE)))
 
 
-
+library(tidyverse)
 
 ###############
 #Here I only got the weighted average uninsured share of 2017-2023
 totals = all_states_100 %>%
-  filter(series == "Total" & state!= "Arkansas") %>%
-  select(year, state,total = value)
+  filter((str_detect(`Label (Grouping)`, "Total civilian noninstitutionalized population")|str_detect(`Label (Grouping)`, "Total population")) & state!= "Arkansas") %>%
+  select(year, state,total = value, series)
 
 uninsured_share = all_states_100 %>%
   filter(series == "Uninsured.Share" & state!="Arkansas") %>%

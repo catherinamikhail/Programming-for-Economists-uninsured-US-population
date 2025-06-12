@@ -18,7 +18,7 @@ us_map = left_join(us_map, spatial_df, by = c("region" = "state"))
 
 #plot the map
 ggplot(us_map, aes(x = long, y = lat, group = group, fill = value)) + 
-  geom_polygon() +
+  geom_polygon (color = "white") +
   scale_fill_gradient(low = "lightblue", high = "red", na.value = "white")+
   ggtitle("Share of Uninsured Population in the US, 2023")+
   labs(fill = "(%) Share of Uninsured Population") + 

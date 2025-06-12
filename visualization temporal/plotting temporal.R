@@ -26,8 +26,8 @@ combined_data_texas = bind_rows(texas_gdp %>%
 #plotting the lines from the 2 dataframes
 
 ggplot() + 
-  geom_line(data = texas_gdp_alt, aes(x = year, y = growth_rate, color = "GDP Growth Rate")) +
-  geom_line(data = texas_share, aes(x = year, y = value, color = "Uninsured Share")) + 
+  geom_line(data = texas_gdp, aes(x = year, y = growth_rate, color = "GDP Growth Rate"), size =1) +
+  geom_line(data = texas_share, aes(x = year, y = gdp, color = "Uninsured Share"), size = 1) + 
   labs(title = "GDP growth rate and Uninsured Share in Texas 2010 - 2023, except 2020", x = "Year", y = "Percentage Points", color = "Type") +
   scale_y_continuous(breaks = seq(-2.5,25, by = 2.5), limits = c(-2.5,25))
 

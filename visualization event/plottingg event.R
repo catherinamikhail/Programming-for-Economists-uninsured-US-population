@@ -265,10 +265,12 @@ ggplot() + geom_line(data = weighted_avg_2, aes(x = year, y = weighted_avg, colo
             aes(x = year, y = value, color = "Arkansas Share Uninsured"),
             size = 1
             ) + 
-  labs(x = "Year", y = "Percentages Point of the Uninsured Population", title = "Event Analysis: Implementation of Work Requirements for Medicaid Coverage in Arkansas, 2018") + 
+  labs(x = "Year", y = "Percentages Point of the Uninsured Population", title = "AR Medicaid Work Requirements, 2018") + 
   scale_color_manual(values = c("Weighted Average" = "darkblue", "Arkansas Share Uninsured" = "darkred")) +
-  theme_classic() + geom_vline (xintercept = event_year, color = "black") + annotate("text", x = event_year + 0.5 , y = max(c(weighted_avg_2$weighted_avg, arkansas_event$value)),
-                                                                                     label = "Implementation of Requirements in 2018", hjust = 0, size =4, fontface = "bold")
+  theme_classic() + geom_vline (xintercept = event_year, color = "black") + annotate("text", x = event_year + 0.3 , y = max(c(weighted_avg_2$weighted_avg, arkansas_event$value)),
+                                                                                     label = "Implementation of Requirements in 2018", hjust = 0, size =3, fontface = "bold") +
+  scale_x_continuous(breaks = c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022,2023)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 #adding a vertical line at the specific year
 

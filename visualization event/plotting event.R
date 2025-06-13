@@ -36,7 +36,7 @@ rest_states_event = all_states_100 %>%
 library(tidyverse)
 
 ###############
-#Here I only got the weighted average uninsured share of 2017-2023
+#Here I only got the weighted average uninsured share of 2017-2023 it is this one!!!
 totals = all_states_100 %>%
   filter((str_detect(`Label (Grouping)`, "Total civilian noninstitutionalized population")|str_detect(`Label (Grouping)`, "Total population")) & state!= "Arkansas") %>%
   select(year, state,total = value, series)

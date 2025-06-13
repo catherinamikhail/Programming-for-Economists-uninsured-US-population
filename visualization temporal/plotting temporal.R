@@ -29,7 +29,9 @@ ggplot() +
   geom_line(data = texas_gdp, aes(x = year, y = growth_rate, color = "GDP Growth Rate"), size =1) +
   geom_line(data = texas_share, aes(x = year, y = gdp, color = "Uninsured Share"), size = 1) + 
   labs(title = "GDP growth rate and Uninsured Share in Texas 2010 - 2023, except 2020", x = "Year", y = "Percentage Points", color = "Type") +
-  scale_y_continuous(breaks = seq(-2.5,25, by = 2.5), limits = c(-2.5,25))
+  scale_y_continuous(breaks = seq(-2.5,25, by = 2.5), limits = c(-2.5,25)) + 
+  scale_x_continuous(breaks = c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022,2023)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 

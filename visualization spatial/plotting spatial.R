@@ -26,7 +26,7 @@ ggplot(us_map, aes(x = long, y = lat, group = group, fill = value)) +
 
 #I still need the state Alaska but the package maps does not include the state Alaska
 
-# I am trying it here again including Alaska
+# I am trying it here again including Alaska with another package
 
 library(rnaturalearth)
 library(ggplot2)
@@ -38,19 +38,19 @@ us_states = ne_states(country = "United States of America", returnclass = "sf")
 #convert state names into lowercase letters such that they match
 us_states$name = tolower(us_states$name)
 
+alaska = us_states[us_states$name == "alaska",]
+
 #merge data with shapefile
-us_states_data = us_states %>%
+alaska_data = alaska %>%
   left_join(spatial_df, by = c("name" = "state"))
 
 #plot the map with the data
-ggplot(us_states_data) + 
+ggplot(alaska_data) + 
   geom_sf(aes(fill = value)) + 
   theme_void() + 
-  scale_fill_gradient( low = "lightblue", high = "darkred", na.value = "white") + 
-  ggtitle("Share of Uninsured Population in the US, 2023") +
-  labs(fill = "(%) Share of Uninsured Population") + 
-  theme(legend.position = "bottom",legend.key.height = unit(0.5, "cm"),legend.justification = "left",plot.margin = unit(c(0.5,1,1,2), "cm"), plot.title = element_text(margin = margin(b = 25)), aspect.ratio = 0.3) +
-  coord_sf(expand = F)
+  scale_fill_gradient( low = "lightblue", high = "red", na.value = "white")+
+  theme(legend.position = "none")
+  
   
 
 

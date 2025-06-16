@@ -12,7 +12,7 @@ spatial_df = spatial_df[-c(45:396),]
 
 #Here I am making a sub dataframe for the temporal visualization with the GDP growth rate of Texas and another subset of the share of uninsured population in the US over the years
 
-#subset Texas
+#subset Texas share of uninsured population
 texas_share = all_states_100 %>%
   filter(state == "Texas",
          year %in% 2010:2023,

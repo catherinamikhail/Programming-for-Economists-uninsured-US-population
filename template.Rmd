@@ -1939,10 +1939,10 @@ ggplot() +
 **Event Analysis Visualization, The Impact of The Implementation of Work Requirements for Medicaid in Arkansas, 2018**
 
 -   describe here what happened in Arkansas in 2018 and why the wanted to implement the work requirements and what these requirements were. and that Arkansas is the treatment group and the other 43 states are the control group and the ware analysing if the implementation had significant impact on the uninsured rates compared to the change in the control group which is the weighted average of the uninsured rates.
+
 ```{r visualization event}
 
 ```
-
 
 ## 3.2 Identify Trends and Patterns
 

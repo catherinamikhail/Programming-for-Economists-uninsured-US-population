@@ -4476,13 +4476,86 @@ Data}\label{part-3-visualize-and-analyze-the-data}
 \subsection{3.1 Create Initial
 Visualizations}\label{create-initial-visualizations}
 
+\textbf{Spatial Variation Visualization, U.S. Share of The Uninsured
+Population in 2023}
+
+\begin{itemize}
+\tightlist
+\item
+  describe here that we mapped here the spatial variation of the
+  uninsured population of the states of which we have the ACS one year
+  estimates of and that we first created a subset of 2023 of the big
+  dataset all\_states\_100 and that we plotted Alaska seperately
+  otherwise the whole map would be too small to visualize.
+\end{itemize}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# ggplot(dataset, aes(x = age, fill = insurance\_status)) +}
-\CommentTok{\#   geom\_histogram(binwidth = 5) +}
-\CommentTok{\#   labs(title = "Insurance Status by Age", x = "Age", y = "Count")}
+\CommentTok{\#Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data}
+
+\NormalTok{spatial\_df }\OtherTok{=}\NormalTok{ all\_states }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2023}\NormalTok{, series }\SpecialCharTok{==} \StringTok{"Uninsured.Share"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(state, value)}
+
+\CommentTok{\#deleting unnecessary rows}
+\NormalTok{spatial\_df }\OtherTok{=}\NormalTok{ spatial\_df[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{45}\SpecialCharTok{:}\DecValTok{396}\NormalTok{),]}
+
+\CommentTok{\#Here I am trying to plot the spatial subset}
+
+\CommentTok{\#getting the US map}
+\NormalTok{us\_map }\OtherTok{=} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
+
+\CommentTok{\#clean up states names in both datasets}
+\NormalTok{us\_map}\SpecialCharTok{$}\NormalTok{region }\OtherTok{=} \FunctionTok{tolower}\NormalTok{(us\_map}\SpecialCharTok{$}\NormalTok{region)}
+\NormalTok{spatial\_df}\SpecialCharTok{$}\NormalTok{state }\OtherTok{=} \FunctionTok{tolower}\NormalTok{(spatial\_df}\SpecialCharTok{$}\NormalTok{state)}
+
+\CommentTok{\#join the map data with the subset data}
+\NormalTok{us\_map }\OtherTok{=} \FunctionTok{left\_join}\NormalTok{(us\_map, spatial\_df, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"region"} \OtherTok{=} \StringTok{"state"}\NormalTok{))}
+
+\CommentTok{\#plot the map}
+\FunctionTok{ggplot}\NormalTok{(us\_map, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ long, }\AttributeTok{y =}\NormalTok{ lat, }\AttributeTok{group =}\NormalTok{ group, }\AttributeTok{fill =}\NormalTok{ value)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_polygon}\NormalTok{ (}\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_gradient}\NormalTok{(}\AttributeTok{low =} \StringTok{"lightblue"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }\AttributeTok{na.value =} \StringTok{"white"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Share of Uninsured Population in the US, 2023"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{fill =} \StringTok{"(\%) Share of Uninsured Population"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_void}\NormalTok{() }
 \end{Highlighting}
 \end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{template_files/figure-latex/visualize-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#I still need the state Alaska but the package maps does not include the state Alaska}
+
+\CommentTok{\# I am trying it here again including Alaska with another package}
+
+\FunctionTok{library}\NormalTok{(rnaturalearth)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\CommentTok{\#get US shapefile}
+\NormalTok{us\_states }\OtherTok{=} \FunctionTok{ne\_states}\NormalTok{(}\AttributeTok{country =} \StringTok{"United States of America"}\NormalTok{, }\AttributeTok{returnclass =} \StringTok{"sf"}\NormalTok{)}
+
+\CommentTok{\#convert state names into lowercase letters such that they match}
+\NormalTok{us\_states}\SpecialCharTok{$}\NormalTok{name }\OtherTok{=} \FunctionTok{tolower}\NormalTok{(us\_states}\SpecialCharTok{$}\NormalTok{name)}
+
+\NormalTok{alaska }\OtherTok{=}\NormalTok{ us\_states[us\_states}\SpecialCharTok{$}\NormalTok{name }\SpecialCharTok{==} \StringTok{"alaska"}\NormalTok{,]}
+
+\CommentTok{\#merge data with shapefile}
+\NormalTok{alaska\_data }\OtherTok{=}\NormalTok{ alaska }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(spatial\_df, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"name"} \OtherTok{=} \StringTok{"state"}\NormalTok{))}
+
+\CommentTok{\#plot the map with the data}
+\FunctionTok{ggplot}\NormalTok{(alaska\_data) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ value)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_void}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_gradient}\NormalTok{( }\AttributeTok{low =} \StringTok{"lightblue"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }\AttributeTok{na.value =} \StringTok{"white"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{template_files/figure-latex/visualize-2.pdf}}
 
 \subsection{3.2 Identify Trends and
 Patterns}\label{identify-trends-and-patterns}

@@ -1745,6 +1745,7 @@ all_states_100 = all_states %>%
 ```
 
 ## datacleaning Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
+
 ```{r}
 #Here I am making a new variable which is the GDP growth rate of the states
 
@@ -1784,18 +1785,161 @@ View(gdp_growth)
 gdp_growth = gdp_growth[-c(1:45), ]
 ```
 
-
-
-
 # Part 3 – Visualize and Analyze the Data
 
 ## 3.1 Create Initial Visualizations
 
-```{r visualize}
-# ggplot(dataset, aes(x = age, fill = insurance_status)) +
-#   geom_histogram(binwidth = 5) +
-#   labs(title = "Insurance Status by Age", x = "Age", y = "Count")
+**Spatial Variation Visualization, U.S. Share of The Uninsured Population in 2023**
+
+-   describe here that we mapped here the spatial variation of the uninsured population of the states of which we have the ACS one year estimates of and that we first created a subset of 2023 of the big dataset all_states_100 and that we plotted Alaska seperately otherwise the whole map would be too small to visualize.
+
+```{r visualize spatial}
+#Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data
+
+spatial_df = all_states %>%
+  filter(year == 2023, series == "Uninsured.Share") %>%
+  select(state, value)
+
+#deleting unnecessary rows
+spatial_df = spatial_df[-c(45:396),]
+
+#Here I am trying to plot the spatial subset
+
+#getting the US map
+us_map = map_data("state")
+
+#clean up states names in both datasets
+us_map$region = tolower(us_map$region)
+spatial_df$state = tolower(spatial_df$state)
+
+#join the map data with the subset data
+us_map = left_join(us_map, spatial_df, by = c("region" = "state"))
+
+#plot the map
+ggplot(us_map, aes(x = long, y = lat, group = group, fill = value)) + 
+  geom_polygon (color = "black") +
+  scale_fill_gradient(low = "lightblue", high = "red", na.value = "white")+
+  ggtitle("Share of Uninsured Population in the US, 2023")+
+  labs(fill = "(%) Share of Uninsured Population") + 
+  theme_void() 
+
+#I still need the state Alaska but the package maps does not include the state Alaska
+
+# I am trying it here again including Alaska with another package
+
+library(rnaturalearth)
+library(ggplot2)
+library(dplyr)
+
+#get US shapefile
+us_states = ne_states(country = "United States of America", returnclass = "sf")
+
+#convert state names into lowercase letters such that they match
+us_states$name = tolower(us_states$name)
+
+alaska = us_states[us_states$name == "alaska",]
+
+#merge data with shapefile
+alaska_data = alaska %>%
+  left_join(spatial_df, by = c("name" = "state"))
+
+#plot the map with the data
+ggplot(alaska_data) + 
+  geom_sf(aes(fill = value)) + 
+  theme_void() + 
+  scale_fill_gradient( low = "lightblue", high = "red", na.value = "white")+
+  theme(legend.position = "none")
 ```
+
+**Temporal Variation Visualization, Texas's Share of Uninsured Population and Texas's GDP growth rate over time**
+
+-   describe that Texas stood out in our spatial variation analysis and that we wanted to dig deeper into Texas's share of uninsured population over time from 2010 until 2023, except for 2020 and that we wanted to see if economic growth played a role in this.
+
+```{r visualization temporal}
+#Here I am making a sub dataframe for the temporal visualization with the GDP growth rate of Texas and another subset of the share of uninsured population in the US over the years
+
+#subset Texas share of uninsured population
+texas_share = all_states_100 %>%
+  filter(state == "Texas",
+         year %in% 2010:2023,
+         series == "Uninsured.Share")
+
+#cleaning out the NA rows of subset Texas
+texas_share = texas_share[-c(2:9),]
+texas_share = texas_share[-c(3:10),]
+texas_share = texas_share[-c(4:11),]
+texas_share = texas_share[-c(5:12),]
+texas_share = texas_share[-c(6:13),]
+texas_share = texas_share[-c(7:14),]
+texas_share = texas_share[-c(8:15),]
+texas_share = texas_share[-c(9:16),]
+texas_share = texas_share[-c(10:17),]
+texas_share = texas_share[-c(11:18),]
+texas_share = texas_share[-c(12:19),]
+texas_share = texas_share[-c(13:20),]
+texas_share = texas_share[-c(14:21),]
+
+
+#subset GDP growth of texas of the years 2010-2023 except for 2020
+library(dplyr)
+texas_gdp = gdp_growth %>%
+  filter(GeoName == "Texas",
+         year %in% 2010:2023) %>%
+  select(year, growth_rate)
+
+#Here I will plot the temporal visualization of Texas over the years 2010-2023 except for year 2020
+
+#the subsets I will use are
+View(texas_share)
+View(texas_gdp)
+
+library(ggplot2)
+library(dplyr)
+
+#Add a type column to distinguish between GDP growth rate and Uninsured Share
+texas_gdp$type = "GDP growth rate"
+texas_share$type = "Uninsured Share"
+
+#rename the columns to match
+texas_share = texas_share %>%
+  rename(gdp = value)
+
+#combine the 2 dataframes
+combined_data_texas = bind_rows(texas_gdp %>%
+                                  select(year, gdp = growth_rate, type),
+                                texas_share %>%
+                                  select(year, gdp, type))
+
+################################################################################
+
+#plotting the lines from the 2 dataframes
+
+ggplot() + 
+  geom_line(data = texas_gdp, aes(x = year, y = growth_rate, color = "GDP Growth Rate"), size =1) +
+  geom_line(data = texas_share, aes(x = year, y = gdp, color = "Uninsured Share"), size = 1) + 
+  labs(title = "GDP growth rate and Uninsured Share in Texas 2010 - 2023, except 2020", x = "Year", y = "Percentage Points", color = "Type") +
+  scale_y_continuous(breaks = seq(-2.5,25, by = 2.5), limits = c(-2.5,25)) + 
+  scale_x_continuous(breaks = c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022,2023)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+**Sub-Group Variation Visualization, The Uninsured Rates of the Middle-Income Group in 2017 in the U.S.**
+
+-   describe that already the KFF (2024) found that the uninsured people in the US are more likely to be low income and that we were wondering what the state of the middle-income group is as they earn too much for Medicaid but not enough for private insurance. 2017 is the year after Trump became president in 2016.
+
+```{r visualization subgroup}
+
+```
+
+**Event Analysis Visualization, The Impact of The Implementation of Work Requirements for Medicaid in Arkansas, 2018**
+
+-   describe here what happened in Arkansas in 2018 and why the wanted to implement the work requirements and what these requirements were. and that Arkansas is the treatment group and the other 43 states are the control group and the ware analysing if the implementation had significant impact on the uninsured rates compared to the change in the control group which is the weighted average of the uninsured rates.
+```{r visualization event}
+
+```
+
 
 ## 3.2 Identify Trends and Patterns
 

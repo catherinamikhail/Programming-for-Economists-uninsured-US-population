@@ -1,7 +1,14 @@
-
+unique(all_states_100$income_group)
 
 ##########################################################
+#create a subset of data 2017 for total unsinred share in the states
 
+library(dplyr)
+
+subgroup_total = all_states_100 %>%
+  filter(year == 2017,
+         series == "Uninsured.Share",
+         income_group == "Total civilian noninstitutionalized population")
 # create a subset data of 2017 and middle income
 #subset that will be used is middle_income of 2017
 #calculate quartiles
@@ -15,7 +22,10 @@ middle_income_4 = middle_income[middle_income$value > quartiles[4] & middle_inco
 #merge subsets into 1 dataframe
 merged_subgroup = rbind(middle_income_1, middle_income_2, middle_income_3, middle_income_4)
  #add a column to indicate the quartile
-merged_subgroup$quartile = factor(rep(c("Q1", "Q2","Q3", "Q4"), times = c(nrow(middle_income_1), nrow (middle_income_2), nrow(middle_income_3), nrow(middle_income_4))))
+merged_subgroup$quartile = factor(rep(c("Bottom", "Second","Third", "Top"), times = c(nrow(middle_income_1), nrow (middle_income_2), nrow(middle_income_3), nrow(middle_income_4))))
+
+boxplot_data = merge(subgroup_total,
+                     merged_subgroup, by = "state")
 
 #print the quartiles
 quartiles = quantile(merged_subgroup$value, probs = c(0.25, 0.5, 0.75))
@@ -27,7 +37,7 @@ print(paste("Third quartile (Q3):", quartiles[3]))
 
 library(ggplot2)
 
-ggplot(merged_subgroup, aes(x = quartile, y = value)) + 
+ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) + 
   geom_boxplot()+
-  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Uninsured", title = "Quartile Analaysis of Uninsured Share among Middle-Income in the US, 2017") + 
+  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Quartile Analaysis of Uninsured Share among Middle-Income in the US, 2017") + 
   theme_classic()

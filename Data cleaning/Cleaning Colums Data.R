@@ -39,6 +39,7 @@ View(dataset_uninsured_population_2022)
 dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Noninstitutionalized", colnames(dataset_uninsured_population_2023)))]
 View(dataset_uninsured_population_2023)
 
+
 # This is me cleaning out the data insured population from 2010-2016 getting out the margin of error
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2010)))]
 View(dataset_uninsured_population_2010)

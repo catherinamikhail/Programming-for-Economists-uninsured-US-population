@@ -3,6 +3,14 @@
 #renaming the table
 table_GDP = Table_GDP_absolute_values_Table_3_
 
+#class coercion of double to numeric of all columns but the first column
+table_GDP[, -1] = lapply(table_GDP[, -1], as.numeric)
+
+#checking the class
+sapply(table_GDP, class)
+
+#yes, all the numbers are now numeric instead of the first column with the names of the states
+
 library(dplyr)
 library(tidyr)
 

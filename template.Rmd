@@ -42,14 +42,1750 @@ The dataset used is derived from the United States Census Bureau and includes in
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(tidyr)
 library(readr)
-# library(ggplot2) # for later use
+library(ggplot2)
+library(rnaturalearth)
+library(maps)
+library(dplyr)
+library(purrr)
+library(stringr)
 ```
 
 ```{r import-data}
-# Example of data import
-# dataset <- read_csv("data/uninsured_2022.csv")
+# The first dataset is from the dataset "selected characteristics of the uninsured in the US from 2010-2023, exclduing 2020 from the US Census Bureau. These are the ACS one-year estimates.
+
+#2010
+ACSST1Y2010_S2702_2025_06_03T123607 <- read_csv("data insured population 2010-2023/ACSST1Y2010.S2702-2025-06-03T123607.csv")
+dataset_uninsured_population_2010 = read_csv("data insured population 2010-2023/ACSST1Y2010.S2702-2025-06-03T123607.csv")
+
+#2011
+ACSST1Y2011_S2702_2025_06_03T123539 <- read_csv("data insured population 2010-2023/ACSST1Y2011.S2702-2025-06-03T123539.csv")
+dataset_uninsured_population_2011 = read_csv("data insured population 2010-2023/ACSST1Y2011.S2702-2025-06-03T123539.csv")
+
+#2012
+ACSST1Y2012_S2702_2025_06_03T123441 <- read_csv("data insured population 2010-2023/ACSST1Y2012.S2702-2025-06-03T123441.csv")
+dataset_uninsured_population_2012 = read_csv("data insured population 2010-2023/ACSST1Y2012.S2702-2025-06-03T123441.csv")
+
+#2013
+ACSST1Y2013_S2702_2025_06_03T123404 <- read_csv("data insured population 2010-2023/ACSST1Y2013.S2702-2025-06-03T123404.csv")
+dataset_uninsured_population_2013 = read_csv("data insured population 2010-2023/ACSST1Y2013.S2702-2025-06-03T123404.csv")
+
+#2014
+ACSST1Y2014_S2702_2025_06_03T123336 <- read_csv("data insured population 2010-2023/ACSST1Y2014.S2702-2025-06-03T123336.csv")
+dataset_uninsured_population_2014 = read_csv("data insured population 2010-2023/ACSST1Y2014.S2702-2025-06-03T123336.csv")
+
+#2015
+ACSST1Y2015_S2702_2025_06_03T123312 <- read_csv("data insured population 2010-2023/ACSST1Y2015.S2702-2025-06-03T123312.csv")
+dataset_uninsured_population_2015 = read_csv("data insured population 2010-2023/ACSST1Y2015.S2702-2025-06-03T123312.csv")
+
+#2016
+ACSST1Y2016_S2702_2025_06_03T123232 <- read_csv("data insured population 2010-2023/ACSST1Y2016.S2702-2025-06-03T123232.csv")
+dataset_uninsured_population_2016 = read_csv("data insured population 2010-2023/ACSST1Y2016.S2702-2025-06-03T123232.csv")
+
+#2017
+ACSST1Y2017_S2702_2025_06_03T123200 <- read_csv("data insured population 2010-2023/ACSST1Y2017.S2702-2025-06-03T123200.csv")
+dataset_uninsured_population_2017 = read_csv("data insured population 2010-2023/ACSST1Y2017.S2702-2025-06-03T123200.csv")
+
+#2018
+ACSST1Y2018_S2702_2025_06_03T123128 <- read_csv("data insured population 2010-2023/ACSST1Y2018.S2702-2025-06-03T123128.csv")
+dataset_uninsured_population_2018 = read_csv("data insured population 2010-2023/ACSST1Y2018.S2702-2025-06-03T123128.csv")
+
+#2019
+ACSST1Y2019_S2702_2025_06_03T123018 <- read_csv("data insured population 2010-2023/ACSST1Y2019.S2702-2025-06-03T123018.csv")
+dataset_uninsured_population_2019 = read_csv("data insured population 2010-2023/ACSST1Y2019.S2702-2025-06-03T123018.csv")
+
+#2021
+ACSST1Y2021_S2702_2025_06_03T122952 <- read_csv("data insured population 2010-2023/ACSST1Y2021.S2702-2025-06-03T122952.csv")
+dataset_uninsured_population_2021 = read_csv("data insured population 2010-2023/ACSST1Y2021.S2702-2025-06-03T122952.csv")
+
+#2022
+ACSST1Y2022_S2702_2025_06_03T122917 <- read_csv("data insured population 2010-2023/ACSST1Y2022.S2702-2025-06-03T122917.csv")
+dataset_uninsured_population_2022 = read_csv("data insured population 2010-2023/ACSST1Y2022.S2702-2025-06-03T122917.csv")
+
+#2023
+ACSST1Y2023_S2702_2025_06_04T165512 <- read_csv("data insured population 2010-2023/ACSST1Y2023.S2702-2025-06-04T165512.csv")
+dataset_uninsured_population_2023 = read_csv("data insured population 2010-2023/ACSST1Y2023.S2702-2025-06-04T165512.csv")
+
+################################################################################
+
+#The second dataset is from the Bureau of Economic Analysis and is the annual real GDP of the 44 states we include in our analysis from the year 2009-2023, excluding 2020
+Table_GDP_absolute_values_Table_3_ <- read_csv("data GDP/Table GDP absolute values - Table (3).csv")
+
+#renaming the table
+table_GDP = Table_GDP_absolute_values_Table_3_
+
 ```
+
+## Data cleaning: Datasets of Uninsured Population and The Creation of The New Variable: The Uninsured Share
+
+-   describe here which states we first took out the margin of errors, then we took out the 6 small states and tell which states they are (deleware, district of columbia, hawaii, puerto rico, north dakota, rhode island, vermont and wyoming check de spelling!!), then that we took out the metadata and tell which metadata that is: age, sex, race and hispanic or latino origin, nativity and U.S. citizenship status, disability status, residence 1 year ago, educational attainment, employment status, work experience, civilian noninstitutionalized workers 16 years and over, earnings in the past 12 months and ratio of income to poverty level in the past 12 months. and that we only kept the total civilian noninstitutionalized population and household income (inflation adjusted). After that we coerced the character values in the yearly datasets no numeric and created our new variable of uninsured share. after that we combined all the yearly datasets
+
+```{r datacleaning of the yearly datasets Uninsured Population 2010,2023}
+# This is me cleaning out the data insured population from 2010-2016 getting out the margin of error
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+
+###############################################################################
+
+#This is me cleaning out the columns of Delaware
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+
+#This is me cleaning out the columns of District of Columbia
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("District of Columbia", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+
+#This is me cleaning out the columns of Hawaii
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+#This is me cleaning out the columns of North Dakota
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("North Dakota", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+#This is me cleaning out the columns of Puerto Rico
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Puerto Rico", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+#This is me cleaning out the columns of Rhode Island
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Rhode Island", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+#This is me cleaning out the columns of Vermont
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Vermont", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+#This is me cleaning out the columns of Wyoming
+dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2010)))]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 = dataset_uninsured_population_2011[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2011)))]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 = dataset_uninsured_population_2012[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2012)))]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 = dataset_uninsured_population_2013[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2013)))]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 = dataset_uninsured_population_2014[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2014)))]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 = dataset_uninsured_population_2015[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2015)))]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 = dataset_uninsured_population_2016[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2016)))]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 = dataset_uninsured_population_2017[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2017)))]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 = dataset_uninsured_population_2018[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2018)))]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 = dataset_uninsured_population_2019[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2019)))]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 = dataset_uninsured_population_2021[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2021)))]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2022)))]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2023)))]
+View(dataset_uninsured_population_2023)
+
+###############################################################################
+
+#Now we are cleaning out the unnecessary metadata in the rows
+#this is me cleaning out the rows with unnecessary metadata and keeping household income levels and the total population numbers
+dataset_uninsured_population_2010 <- dataset_uninsured_population_2010[-c(2:104),]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 <- dataset_uninsured_population_2011[-c(2:104),]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 <- dataset_uninsured_population_2012[-c(2:104),]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 <- dataset_uninsured_population_2013[-c(2:104),]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 <- dataset_uninsured_population_2014[-c(2:104),]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 <- dataset_uninsured_population_2015[-c(2:104),]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 <- dataset_uninsured_population_2016[-c(2:104),]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 <- dataset_uninsured_population_2017[-c(2:104),]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 <- dataset_uninsured_population_2018[-c(2:104),]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 <- dataset_uninsured_population_2019[-c(2:104),]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 <- dataset_uninsured_population_2021[-c(2:104),]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 <- dataset_uninsured_population_2022[-c(2:104),]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 <- dataset_uninsured_population_2023[-c(2:104),]
+View(dataset_uninsured_population_2023)
+
+dataset_uninsured_population_2010 <- dataset_uninsured_population_2010[-c(10:17),]
+View(dataset_uninsured_population_2010)
+
+dataset_uninsured_population_2011 <- dataset_uninsured_population_2011[-c(10:17),]
+View(dataset_uninsured_population_2011)
+
+dataset_uninsured_population_2012 <- dataset_uninsured_population_2012[-c(10:17),]
+View(dataset_uninsured_population_2012)
+
+dataset_uninsured_population_2013 <- dataset_uninsured_population_2013[-c(10:17),]
+View(dataset_uninsured_population_2013)
+
+dataset_uninsured_population_2014 <- dataset_uninsured_population_2014[-c(10:17),]
+View(dataset_uninsured_population_2014)
+
+dataset_uninsured_population_2015 <- dataset_uninsured_population_2015[-c(10:17),]
+View(dataset_uninsured_population_2015)
+
+dataset_uninsured_population_2016 <- dataset_uninsured_population_2016[-c(10:17),]
+View(dataset_uninsured_population_2016)
+
+dataset_uninsured_population_2017 <- dataset_uninsured_population_2017[-c(10:17),]
+View(dataset_uninsured_population_2017)
+
+dataset_uninsured_population_2018 <- dataset_uninsured_population_2018[-c(10:17),]
+View(dataset_uninsured_population_2018)
+
+dataset_uninsured_population_2019 <- dataset_uninsured_population_2019[-c(10:17),]
+View(dataset_uninsured_population_2019)
+
+dataset_uninsured_population_2021 <- dataset_uninsured_population_2021[-c(10:17),]
+View(dataset_uninsured_population_2021)
+
+dataset_uninsured_population_2022 <- dataset_uninsured_population_2022[-c(10:17),]
+View(dataset_uninsured_population_2022)
+
+dataset_uninsured_population_2023 <- dataset_uninsured_population_2023[-c(10:17),]
+View(dataset_uninsured_population_2023)
+
+################################################################################
+
+#As the values in these yearly datasets are stored as characters, we are now going to coerce them into numeric values so that we can create a new variable afterwards.
+#The values in the datasets of the uninsured population are stored as characters. Here I am going to get rid of "" so I can store them as numeric.
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2010[[1]]
+
+# Clean and convert the rest of the columns
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2010[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2010_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2010[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2010_cleaned <- cbind(first_col, dataset_uninsured_population_2010_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2010_cleaned)[1] <- colnames(dataset_uninsured_population_2010)[1]
+
+View(dataset_uninsured_population_2010_cleaned)
+class(dataset_uninsured_population_2010_cleaned)
+class(dataset_uninsured_population_2010_cleaned[[2]])
+
+
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2011[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2011_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2011[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2011_cleaned <- cbind(first_col, dataset_uninsured_population_2011_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2011_cleaned)[1] <- colnames(dataset_uninsured_population_2011)[1]
+
+View(dataset_uninsured_population_2011_cleaned)
+class(dataset_uninsured_population_2011_cleaned)
+class(dataset_uninsured_population_2011_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2012[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2012_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2012[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2012_cleaned <- cbind(first_col, dataset_uninsured_population_2012_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2012_cleaned)[1] <- colnames(dataset_uninsured_population_2012)[1]
+
+View(dataset_uninsured_population_2012_cleaned)
+class(dataset_uninsured_population_2012_cleaned)
+class(dataset_uninsured_population_2012_cleaned[[2]])
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2013[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2013_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2013[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2013_cleaned <- cbind(first_col, dataset_uninsured_population_2013_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2013_cleaned)[1] <- colnames(dataset_uninsured_population_2013)[1]
+
+View(dataset_uninsured_population_2013_cleaned)
+class(dataset_uninsured_population_2013_cleaned)
+class(dataset_uninsured_population_2013_cleaned[[2]])
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2014[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2014_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2014[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2014_cleaned <- cbind(first_col, dataset_uninsured_population_2014_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2014_cleaned)[1] <- colnames(dataset_uninsured_population_2014)[1]
+
+View(dataset_uninsured_population_2014_cleaned)
+class(dataset_uninsured_population_2014_cleaned)
+class(dataset_uninsured_population_2014_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2015[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2015_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2015[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2015_cleaned <- cbind(first_col, dataset_uninsured_population_2015_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2015_cleaned)[1] <- colnames(dataset_uninsured_population_2015)[1]
+
+View(dataset_uninsured_population_2015_cleaned)
+class(dataset_uninsured_population_2015_cleaned)
+class(dataset_uninsured_population_2015_cleaned[[2]])
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2016[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2016_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2016[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2016_cleaned <- cbind(first_col, dataset_uninsured_population_2016_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2016_cleaned)[1] <- colnames(dataset_uninsured_population_2016)[1]
+
+View(dataset_uninsured_population_2016_cleaned)
+class(dataset_uninsured_population_2016_cleaned)
+class(dataset_uninsured_population_2016_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2017[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2017_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2017[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2017_cleaned <- cbind(first_col, dataset_uninsured_population_2017_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2017_cleaned)[1] <- colnames(dataset_uninsured_population_2017)[1]
+
+View(dataset_uninsured_population_2017_cleaned)
+class(dataset_uninsured_population_2017_cleaned)
+class(dataset_uninsured_population_2017_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2018[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2018_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2018[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2018_cleaned <- cbind(first_col, dataset_uninsured_population_2018_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2018_cleaned)[1] <- colnames(dataset_uninsured_population_2018)[1]
+
+View(dataset_uninsured_population_2018_cleaned)
+class(dataset_uninsured_population_2018_cleaned)
+class(dataset_uninsured_population_2018_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2019[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2019_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2019[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2019_cleaned <- cbind(first_col, dataset_uninsured_population_2019_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2019_cleaned)[1] <- colnames(dataset_uninsured_population_2019)[1]
+
+View(dataset_uninsured_population_2019_cleaned)
+class(dataset_uninsured_population_2019_cleaned)
+class(dataset_uninsured_population_2019_cleaned[[2]])
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2021[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2021_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2021[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2021_cleaned <- cbind(first_col, dataset_uninsured_population_2021_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2021_cleaned)[1] <- colnames(dataset_uninsured_population_2021)[1]
+
+View(dataset_uninsured_population_2021_cleaned)
+class(dataset_uninsured_population_2021_cleaned)
+class(dataset_uninsured_population_2021_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2022[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2022_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2022[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2022_cleaned <- cbind(first_col, dataset_uninsured_population_2022_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2022_cleaned)[1] <- colnames(dataset_uninsured_population_2022)[1]
+
+View(dataset_uninsured_population_2022_cleaned)
+class(dataset_uninsured_population_2022_cleaned)
+class(dataset_uninsured_population_2022_cleaned[[2]])
+
+
+# Keep the first column as-is
+first_col <- dataset_uninsured_population_2023[[1]]
+
+# Clean and convert the rest of the columns
+dataset_uninsured_population_2023_numeric <- as.data.frame(
+  lapply(dataset_uninsured_population_2023[ , -1], function(col) {
+    cleaned <- gsub("[\"%,]", "", col)
+    as.numeric(cleaned)
+  }),
+  stringsAsFactors = FALSE
+)
+
+#Combine back with the first column
+dataset_uninsured_population_2023_cleaned <- cbind(first_col, dataset_uninsured_population_2023_numeric)
+
+#rename the first column
+colnames(dataset_uninsured_population_2023_cleaned)[1] <- colnames(dataset_uninsured_population_2023)[1]
+
+View(dataset_uninsured_population_2023_cleaned)
+class(dataset_uninsured_population_2023_cleaned)
+class(dataset_uninsured_population_2023_cleaned[[2]])
+
+################################################################################
+
+#Now that the values in the yearly datasets are stored as numeric values but the first column as the first column contains the names of the states, we can now create are first new variable, which is the uninsured share:
+
+#Here I am trying to compute and create a new variable, which is the share of uninsured population per state and per year
+
+# Copy original data 2010
+df_pop_2010 <- dataset_uninsured_population_2010_cleaned
+col_names <- colnames(df_pop_2010)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2010[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2010[[total_col]][1]) && df_pop_2010[[total_col]][1] != 0) {
+      df_pop_2010[[share_col]][1] <- df_pop_2010[[uninsured_col]][1] / df_pop_2010[[total_col]][1]
+    } else {
+      df_pop_2010[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2010 <- df_pop_2010[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2010), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2010[1, share_cols])
+
+View(df_pop_2010)
+
+#################################################################################
+
+# Copy original data 2011
+df_pop_2011 <- dataset_uninsured_population_2011_cleaned
+col_names <- colnames(df_pop_2011)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2011[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2011[[total_col]][1]) && df_pop_2011[[total_col]][1] != 0) {
+      df_pop_2011[[share_col]][1] <- df_pop_2011[[uninsured_col]][1] / df_pop_2011[[total_col]][1]
+    } else {
+      df_pop_2011[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2011 <- df_pop_2011[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2011), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2011[1, share_cols])
+
+View(df_pop_2011)
+
+
+###############################################################################
+
+
+# Copy original data 2012
+df_pop_2012 <- dataset_uninsured_population_2012_cleaned
+col_names <- colnames(df_pop_2012)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2012[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2012[[total_col]][1]) && df_pop_2012[[total_col]][1] != 0) {
+      df_pop_2012[[share_col]][1] <- df_pop_2012[[uninsured_col]][1] / df_pop_2012[[total_col]][1]
+    } else {
+      df_pop_2012[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2012 <- df_pop_2012[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2012), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2012[1, share_cols])
+
+
+###############################################################################
+
+
+# Copy original data 2013
+df_pop_2013 <- dataset_uninsured_population_2013_cleaned
+col_names <- colnames(df_pop_2013)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2013[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2013[[total_col]][1]) && df_pop_2013[[total_col]][1] != 0) {
+      df_pop_2013[[share_col]][1] <- df_pop_2013[[uninsured_col]][1] / df_pop_2013[[total_col]][1]
+    } else {
+      df_pop_2013[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2013 <- df_pop_2013[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2013), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2013[1, share_cols])
+
+
+################################################################################
+
+
+# Copy original data 2014
+df_pop_2014 <- dataset_uninsured_population_2014_cleaned
+col_names <- colnames(df_pop_2014)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2014[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2014[[total_col]][1]) && df_pop_2014[[total_col]][1] != 0) {
+      df_pop_2014[[share_col]][1] <- df_pop_2014[[uninsured_col]][1] / df_pop_2014[[total_col]][1]
+    } else {
+      df_pop_2014[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2014 <- df_pop_2014[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2014), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2014[1, share_cols])
+
+
+################################################################################
+
+
+# Copy original data 2015
+df_pop_2015 <- dataset_uninsured_population_2015_cleaned
+col_names <- colnames(df_pop_2015)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2015[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2015[[total_col]][1]) && df_pop_2015[[total_col]][1] != 0) {
+      df_pop_2015[[share_col]][1] <- df_pop_2015[[uninsured_col]][1] / df_pop_2015[[total_col]][1]
+    } else {
+      df_pop_2015[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2015 <- df_pop_2015[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2015), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2015[1, share_cols])
+
+
+###############################################################################
+
+
+# Copy original data 2016
+df_pop_2016 <- dataset_uninsured_population_2016_cleaned
+col_names <- colnames(df_pop_2016)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2016[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2016[[total_col]][1]) && df_pop_2016[[total_col]][1] != 0) {
+      df_pop_2016[[share_col]][1] <- df_pop_2016[[uninsured_col]][1] / df_pop_2016[[total_col]][1]
+    } else {
+      df_pop_2016[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2016 <- df_pop_2016[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2016), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2016[1, share_cols])
+
+################################################################################
+
+#something went wrong here with 2017 and 2018, so the function that worked is much more below as the column names in the years of 2017-2018 were named differently than the years before
+
+# Copy original data 2017
+df_pop_2017 <- dataset_uninsured_population_2017_cleaned
+col_names <- colnames(df_pop_2017)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2017[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2017[[total_col]][1]) && df_pop_2017[[total_col]][1] != 0) {
+      df_pop_2017[[share_col]][1] <- df_pop_2017[[uninsured_col]][1] / df_pop_2017[[total_col]][1]
+    } else {
+      df_pop_2017[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2017 <- df_pop_2017[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2017), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2017[1, share_cols])
+
+# Copy original data 2018
+df_pop_2018<- dataset_uninsured_population_2018_cleaned
+col_names <- colnames(df_pop_2018)
+new_col_order <- col_names  # to control column ordering
+
+# Loop through all columns ending in "..Uninsured.Population..Estimate"
+uninsured_cols <- grep("\\.\\.Uninsured\\.Population\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract the state name — everything before the first ".."
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Define the total population column and the share column
+  total_col <- paste0(state, "..Total.Civilian.Noninstitutionalized.Population..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  if (total_col %in% col_names) {
+    # Initialize new share column with NA
+    df_pop_2018[[share_col]] <- NA
+    
+    # Calculate only for first row
+    if (!is.na(df_pop_2018[[total_col]][1]) && df_pop_2018[[total_col]][1] != 0) {
+      df_pop_2018[[share_col]][1] <- df_pop_2018[[uninsured_col]][1] / df_pop_2018[[total_col]][1]
+    } else {
+      df_pop_2018[[share_col]][1] <- NA
+    }
+    
+    # Insert new column right after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+    
+  } else {
+    cat("⚠️ Total population column not found for:", state, "\n")
+  }
+}
+
+# Reorder the columns
+df_pop_2018 <- df_pop_2018[, new_col_order]
+
+# Preview: Show share columns for the first row
+share_cols <- grep("\\.\\.Uninsured.Share$", colnames(df_pop_2018), value = TRUE)
+cat("\n✅ Created share columns:\n")
+print(share_cols)
+print(df_pop_2018[1, share_cols])
+
+View(df_pop_2017)
+View(df_pop_2016)
+View(df_pop_2018)
+
+#I have seen that it did not work for the years of 2017 and 2018 so I have to see what the names of the columns are
+grep("Alabama", colnames(dataset_uninsured_population_2017_cleaned), value = TRUE)
+grep("Alabama", colnames(dataset_uninsured_population_2018_cleaned), value = TRUE)
+
+#Here I am starting again from 2017
+
+# Make a working copy of your data 2017
+df_pop_2017 <- dataset_uninsured_population_2017_cleaned
+col_names <- colnames(df_pop_2017)
+new_col_order <- col_names
+
+# Loop through all columns ending with "..Total.Uninsured..Estimate"
+uninsured_cols <- grep("\\.\\.Total\\.Uninsured\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract state (everything before first "..")
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Construct matching total population column and new share column
+  total_col <- paste0(state, "..Total..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  # Check if the total population column exists
+  if (total_col %in% col_names) {
+    # Create new share column, default NA
+    df_pop_2017[[share_col]] <- NA
+    
+    # Calculate share only for first row
+    total_val <- df_pop_2017[[total_col]][1]
+    uninsured_val <- df_pop_2017[[uninsured_col]][1]
+    
+    if (!is.na(total_val) && total_val != 0) {
+      df_pop_2017[[share_col]][1] <- uninsured_val / total_val
+    }
+    
+    # Insert share column after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+  } else {
+    cat("⚠️ Total column not found for", state, "\n")
+  }
+}
+
+# Reorder columns
+df_pop_2017 <- df_pop_2017[, new_col_order]
+
+# Show all created share columns
+share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2017), value = TRUE)
+cat("\n✅ Created columns:\n")
+print(share_cols)
+print(df_pop_2017[1, share_cols])
+
+#now it worked and I can work further on 2018-2023 except for 2020 as we do not have the data of that
+
+# Make a working copy of your data 2018
+df_pop_2018 <- dataset_uninsured_population_2018_cleaned
+col_names <- colnames(df_pop_2018)
+new_col_order <- col_names
+
+# Loop through all columns ending with "..Total.Uninsured..Estimate"
+uninsured_cols <- grep("\\.\\.Total\\.Uninsured\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract state (everything before first "..")
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Construct matching total population column and new share column
+  total_col <- paste0(state, "..Total..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  # Check if the total population column exists
+  if (total_col %in% col_names) {
+    # Create new share column, default NA
+    df_pop_2018[[share_col]] <- NA
+    
+    # Calculate share only for first row
+    total_val <- df_pop_2018[[total_col]][1]
+    uninsured_val <- df_pop_2018[[uninsured_col]][1]
+    
+    if (!is.na(total_val) && total_val != 0) {
+      df_pop_2018[[share_col]][1] <- uninsured_val / total_val
+    }
+    
+    # Insert share column after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+  } else {
+    cat("⚠️ Total column not found for", state, "\n")
+  }
+}
+
+# Reorder columns
+df_pop_2018 <- df_pop_2018[, new_col_order]
+
+# Show all created share columns
+share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2018), value = TRUE)
+cat("\n✅ Created columns:\n")
+print(share_cols)
+print(df_pop_2018[1, share_cols])
+
+
+################################################################################
+
+
+# Make a working copy of your data 2019
+df_pop_2019 <- dataset_uninsured_population_2019_cleaned
+col_names <- colnames(df_pop_2019)
+new_col_order <- col_names
+
+# Loop through all columns ending with "..Total.Uninsured..Estimate"
+uninsured_cols <- grep("\\.\\.Total\\.Uninsured\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract state (everything before first "..")
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Construct matching total population column and new share column
+  total_col <- paste0(state, "..Total..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  # Check if the total population column exists
+  if (total_col %in% col_names) {
+    # Create new share column, default NA
+    df_pop_2019[[share_col]] <- NA
+    
+    # Calculate share only for first row
+    total_val <- df_pop_2019[[total_col]][1]
+    uninsured_val <- df_pop_2019[[uninsured_col]][1]
+    
+    if (!is.na(total_val) && total_val != 0) {
+      df_pop_2019[[share_col]][1] <- uninsured_val / total_val
+    }
+    
+    # Insert share column after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+  } else {
+    cat("⚠️ Total column not found for", state, "\n")
+  }
+}
+
+# Reorder columns
+df_pop_2019 <- df_pop_2019[, new_col_order]
+
+# Show all created share columns
+share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2019), value = TRUE)
+cat("\n✅ Created columns:\n")
+print(share_cols)
+print(df_pop_2019[1, share_cols])
+
+
+################################################################################
+
+
+# Make a working copy of your data 2021
+df_pop_2021 <- dataset_uninsured_population_2021_cleaned
+col_names <- colnames(df_pop_2021)
+new_col_order <- col_names
+
+# Loop through all columns ending with "..Total.Uninsured..Estimate"
+uninsured_cols <- grep("\\.\\.Total\\.Uninsured\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract state (everything before first "..")
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Construct matching total population column and new share column
+  total_col <- paste0(state, "..Total..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  # Check if the total population column exists
+  if (total_col %in% col_names) {
+    # Create new share column, default NA
+    df_pop_2021[[share_col]] <- NA
+    
+    # Calculate share only for first row
+    total_val <- df_pop_2021[[total_col]][1]
+    uninsured_val <- df_pop_2021[[uninsured_col]][1]
+    
+    if (!is.na(total_val) && total_val != 0) {
+      df_pop_2021[[share_col]][1] <- uninsured_val / total_val
+    }
+    
+    # Insert share column after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+  } else {
+    cat("⚠️ Total column not found for", state, "\n")
+  }
+}
+
+# Reorder columns
+df_pop_2021 <- df_pop_2021[, new_col_order]
+
+# Show all created share columns
+share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2021), value = TRUE)
+cat("\n✅ Created columns:\n")
+print(share_cols)
+print(df_pop_2021[1, share_cols])
+
+###############################################################################
+
+
+# Make a working copy of your data 2022
+df_pop_2022 <- dataset_uninsured_population_2022_cleaned
+col_names <- colnames(df_pop_2022)
+new_col_order <- col_names
+
+# Loop through all columns ending with "..Total.Uninsured..Estimate"
+uninsured_cols <- grep("\\.\\.Total\\.Uninsured\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract state (everything before first "..")
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Construct matching total population column and new share column
+  total_col <- paste0(state, "..Total..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  # Check if the total population column exists
+  if (total_col %in% col_names) {
+    # Create new share column, default NA
+    df_pop_2022[[share_col]] <- NA
+    
+    # Calculate share only for first row
+    total_val <- df_pop_2022[[total_col]][1]
+    uninsured_val <- df_pop_2022[[uninsured_col]][1]
+    
+    if (!is.na(total_val) && total_val != 0) {
+      df_pop_2022[[share_col]][1] <- uninsured_val / total_val
+    }
+    
+    # Insert share column after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+  } else {
+    cat("⚠️ Total column not found for", state, "\n")
+  }
+}
+
+# Reorder columns
+df_pop_2022 <- df_pop_2022[, new_col_order]
+
+# Show all created share columns
+share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2022), value = TRUE)
+cat("\n✅ Created columns:\n")
+print(share_cols)
+print(df_pop_2022[1, share_cols])
+
+
+################################################################################
+
+# Make a working copy of your data 2023
+df_pop_2023 <- dataset_uninsured_population_2023_cleaned
+col_names <- colnames(df_pop_2023)
+new_col_order <- col_names
+
+# Loop through all columns ending with "..Total.Uninsured..Estimate"
+uninsured_cols <- grep("\\.\\.Total\\.Uninsured\\.\\.Estimate$", col_names, value = TRUE)
+
+for (uninsured_col in uninsured_cols) {
+  # Extract state (everything before first "..")
+  state <- strsplit(uninsured_col, "\\.\\.")[[1]][1]
+  
+  # Construct matching total population column and new share column
+  total_col <- paste0(state, "..Total..Estimate")
+  share_col <- paste0(state, "..Uninsured.Share")
+  
+  cat("Processing:", state, "\n")
+  
+  # Check if the total population column exists
+  if (total_col %in% col_names) {
+    # Create new share column, default NA
+    df_pop_2023[[share_col]] <- NA
+    
+    # Calculate share only for first row
+    total_val <- df_pop_2023[[total_col]][1]
+    uninsured_val <- df_pop_2023[[uninsured_col]][1]
+    
+    if (!is.na(total_val) && total_val != 0) {
+      df_pop_2023[[share_col]][1] <- uninsured_val / total_val
+    }
+    
+    # Insert share column after the uninsured column
+    pos <- match(uninsured_col, new_col_order)
+    new_col_order <- append(new_col_order, share_col, after = pos)
+  } else {
+    cat("⚠️ Total column not found for", state, "\n")
+  }
+}
+
+# Reorder columns
+df_pop_2023 <- df_pop_2023[, new_col_order]
+
+# Show all created share columns
+share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2023), value = TRUE)
+cat("\n✅ Created columns:\n")
+print(share_cols)
+print(df_pop_2023[1, share_cols])
+
+################################################################################
+
+#Now we have the new variable in the seperate datasets and now we are going to merge these yearly datasets into 1 dataset
+
+# Define years
+years_early <- 2010:2016
+years_late <- c(2017:2019, 2021:2023)
+
+# Function to process one year of data
+process_df <- function(df, year, is_early) {
+  label_col <- names(df)[1]
+  state_cols <- names(df)[!names(df) %in% c(label_col, "Unnamed: 0")]
+  states <- unique(str_extract(state_cols, "^[^.]+"))
+  
+  # Set correct suffixes depending on year
+  if (is_early) {
+    pop_suffix <- "..Total.Civilian.Noninstitutionalized.Population..Estimate"
+    unins_suffix <- "..Uninsured.Population..Estimate"
+    share_suffix <- "..Uninsured.Share"
+  } else {
+    pop_suffix <- "..Total..Estimate"
+    unins_suffix <- "..Total.Uninsured..Estimate"
+    share_suffix <- "..Uninsured.Share"
+  }
+  
+  # Extract for each state
+  rows <- lapply(states, function(state) {
+    pop_col <- paste0(state, pop_suffix)
+    unins_col <- paste0(state, unins_suffix)
+    share_col <- paste0(state, share_suffix)
+    
+    # Get only total population row
+    total_row <- df %>%
+      filter(str_trim(.data[[label_col]]) == "Total population")
+    
+    if (nrow(total_row) == 0 || !(pop_col %in% names(df))) return(NULL)
+    
+    tibble(
+      state = state,
+      year = year,
+      total_population = as.numeric(total_row[[pop_col]]),
+      total_uninsured = as.numeric(total_row[[unins_col]]),
+      uninsured_share = as.numeric(total_row[[share_col]])
+    )
+  })
+  
+  bind_rows(rows)
+}
+
+# Process all early years
+dfs_early <- mget(paste0("df_pop_", years_early))
+panel_early <- map2_dfr(dfs_early, years_early, ~process_df(.x, .y, is_early = TRUE))
+
+# Process all late years
+dfs_late <- mget(paste0("df_pop_", years_late))
+#panel_late <- map2_dfr(dfs_late, years_late, ~process_df(.x, .y, is_early = FALSE))
+
+early_states <- bind_rows(
+  dfs_early, .id = "year") %>%
+  pivot_longer(
+    -c(year, "Label (Grouping)"),
+    names_to = "tmp",
+    values_to = "value") %>%
+  separate(tmp,
+           into = c("state", "series", "measure"),
+           sep = "\\.\\.",
+           remove = TRUE)
+
+late_states <- bind_rows(
+  dfs_late, .id = "year") %>%
+  pivot_longer(
+    -c(year, "Label (Grouping)"),
+    names_to = "tmp",
+    values_to = "value") %>%
+  separate(tmp,
+           into = c("state", "series", "measure"),
+           sep = "\\.\\.",
+           remove = TRUE)
+# View
+
+all_states <- rbind(late_states, early_states)
+
+head(all_states)
+###############################################################################
+
+#cleaning out df_pop from the column of years to only remain the year numbers
+
+unique(all_states$year)
+
+all_states$year <- str_remove(all_states$year, "df_pop_")
+
+#Now I am coercing the string into numeric so plotting becomes easier
+
+all_states$year <- as.numeric(all_states$year)
+str(all_states)
+
+################################################################################
+#Here I am multiplying the uninsured share by 100, such that they are representing percentages
+all_states_100 = all_states %>%
+  mutate(value = 
+           ifelse(grepl("Uninsured.Share",
+                        series), value*100, value))
+
+#This is the dataset for the Uninsured Population we can use for the visualizations
+
+
+```
+
+## datacleaning Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
+```{r}
+#Here I am making a new variable which is the GDP growth rate of the states
+
+#renaming the table
+table_GDP = Table_GDP_absolute_values_Table_3_
+
+#class coercion of double to numeric of all columns but the first column
+table_GDP[, -1] = lapply(table_GDP[, -1], as.numeric)
+
+#checking the class
+sapply(table_GDP, class)
+
+#yes, all the numbers are now numeric instead of the first column with the names of the states
+
+
+# Pivot longer
+gdp_long <- table_GDP %>%
+  pivot_longer(
+    cols = -GeoName,
+    names_to = "year",
+    values_to = "gdp"
+  ) %>%
+  mutate(year = as.integer(year))
+
+View(table_GDP)
+View(gdp_long)
+
+# Calculate GDP growth rate
+gdp_growth <- gdp_long %>%
+  group_by(GeoName) %>%
+  arrange(year) %>%
+  mutate(growth_rate = (gdp - lag(gdp)) / lag(gdp) * 100)
+
+View(gdp_growth)
+
+#delete rows from 2009
+gdp_growth = gdp_growth[-c(1:45), ]
+```
+
+
+
 
 # Part 3 – Visualize and Analyze the Data
 

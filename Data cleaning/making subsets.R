@@ -10,36 +10,44 @@ spatial_df = all_states %>%
 spatial_df = spatial_df[-c(45:396),]
 
 
-#Here I am making a sub dataframe for the temporal visualization with the weighted average of the US uninsured share per year
+#Here I am making a sub dataframe for the temporal visualization with the GDP growth rate of Texas and another subset of the share of uninsured population in the US over the years
+
+#subset Texas
+texas_share = all_states_100 %>%
+  filter(state == "Texas",
+         year %in% 2010:2023,
+         series == "Uninsured.Share")
+
+#cleaning out the NA rows of subset Texas
+texas_share = texas_share[-c(2:9),]
+texas_share = texas_share[-c(3:10),]
+texas_share = texas_share[-c(4:11),]
+texas_share = texas_share[-c(5:12),]
+texas_share = texas_share[-c(6:13),]
+texas_share = texas_share[-c(7:14),]
+texas_share = texas_share[-c(8:15),]
+texas_share = texas_share[-c(9:16),]
+texas_share = texas_share[-c(10:17),]
+texas_share = texas_share[-c(11:18),]
+texas_share = texas_share[-c(12:19),]
+texas_share = texas_share[-c(13:20),]
+texas_share = texas_share[-c(14:21),]
+
+
+#subset GDP growth of texas of the years 2010-2023 except for 2020
 library(dplyr)
-total_df = all_states_100 %>% 
-  filter(series == "Total")
-uninsured_share_df = all_states_100 %>%
-  filter(series == "Uninsured.Share")
+texas_gdp = gdp_growth %>%
+  filter(GeoName == "Texas",
+         year %in% 2010:2023) %>%
+  select(year, growth_rate)
 
-weighted_avg_states = uninsured_share_df %>%
-  inner_join(total_df, by = c("year", "state"), suffix = c("_uninsured", "_total"))%>%
-  group_by(year) %>%
-  summarise(weighted_avg_uninsured_share = weighted.mean(value_uninsured, value_total))
 
-temp_df = all_states %>%
-  filter(series == "Uninsured.Share") %>%
-  group_by(year)%>%
-  summarise(mean_uninsured = mean(value, na.rm = TRUE))
-
-#Here I am making a sub-dataframe for the temporal visualization with the GDP growth rates of the states in the US of which we have the data from 2010-2023 except for 2020
-us_gdp = gdp_growth %>%
-  filter(GeoName != "United States")%>%
-  group_by(year) %>%
-  summarise(mean_gdp = mean(gdp, na.rm = TRUE),
-            mean_growth_rate = mean(growth_rate, na.rm = TRUE))
 
 #Here I am making a sub-dataframe for the sub-population visualization where we compare uninsured shares of people with the lowest income level of under the 25,000 dollars and the highest income level of 100,000 dollars and over
  
-#sub dataframe under $25,000 with the total uninsured share values (you can choose a year) 
-
-#sub dataframe $100,000 and over with the total uninsured share values (you can choose a year)
-
+#sub dataframe $25,000 to $49,999 with the total uninsured share values (2017) 
+middle_income = all_states_100[ all_states_100$`Label (Grouping)` == ("$25,000 to $49,999"),]
+high_income = all_states_100[all_states_100$`Label (Grouping)` == ("$100,000 and over"),]
 
 
 
@@ -72,6 +80,20 @@ View(arkansas_event)
 #this sub dataframe is the same as temp_df, so you do not have to compute this one
 View(temp_df)
 
+total_df = all_states_100 %>% 
+  filter(series == "Total")
+uninsured_share_df = all_states_100 %>%
+  filter(series == "Uninsured.Share")
+
+weighted_avg_states = uninsured_share_df %>%
+  inner_join(total_df, by = c("year", "state"), suffix = c("_uninsured", "_total"))%>%
+  group_by(year) %>%
+  summarise(weighted_avg_uninsured_share = weighted.mean(value_uninsured, value_total))
+
+temp_df = all_states %>%
+  filter(series == "Uninsured.Share") %>%
+  group_by(year)%>%
+  summarise(mean_uninsured = mean(value, na.rm = TRUE))
 
 
 

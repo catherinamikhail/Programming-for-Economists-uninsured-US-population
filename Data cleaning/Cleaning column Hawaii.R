@@ -1,4 +1,4 @@
-#This is me cleaning out the columsn of Hawaii
+#This is me cleaning out the columns of Hawaii
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Hawaii", colnames(dataset_uninsured_population_2010)))]
 View(dataset_uninsured_population_2010)
 

@@ -1,6 +1,7 @@
 library(dplyr)
 library(stringr)
 library(purrr)
+library(tidyverse)
 
 # Define years
 years_early <- 2010:2016
@@ -53,8 +54,7 @@ panel_early <- map2_dfr(dfs_early, years_early, ~process_df(.x, .y, is_early = T
 
 # Process all late years
 dfs_late <- mget(paste0("df_pop_", years_late))
-panel_late <- map2_dfr(dfs_late, years_late, ~process_df(.x, .y, is_early = FALSE))
-
+#panel_late <- map2_dfr(dfs_late, years_late, ~process_df(.x, .y, is_early = FALSE))
 
 early_states <- bind_rows(
   dfs_early, .id = "year") %>%

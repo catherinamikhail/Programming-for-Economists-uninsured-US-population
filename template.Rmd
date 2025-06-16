@@ -35,6 +35,8 @@ if (!tinytex::is_tinytex()) {
 }
 ```
 
+Part 1 – Identify a Social Problem
+
 ## 1.1 Describe the Social Problem
 
 The high number of uninsured Americans is a persistent issue with substantial social and economic consequences. According to the U.S. Census Bureau, over 27 million Americans lacked health insurance in 2022. This lack of coverage can lead to delayed medical care, poor health outcomes, and financial instability.

@@ -1,10 +1,4 @@
 ---
-title: "template.Rmd"
-output: pdf_document
-date: "2025-06-11"
----
-
----
 title: "Visualizing the Uninsured: A Data Science Perspective on U.S. Health Coverage"
 author: |
   Eduardo Sáenz-Messía Laborda  
@@ -18,11 +12,28 @@ author: |
 date: "2025-06-24"
 output:
   pdf_document:
+    latex_engine: xelatex
     toc: true
     number_sections: true
 ---
 
-# Part 1 – Identify a Social Problem
+```{r setup, include=FALSE}
+
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+
+packages <- c("rmarkdown", "tinytex", "rnaturalearth", "rnaturalearthdata", "maps", "tidyverse")
+
+installed <- packages %in% rownames(installed.packages())
+if (any(!installed)) {
+  install.packages(packages[!installed], repos = "https://cran.rstudio.com/")
+}
+
+invisible(lapply(packages, library, character.only = TRUE))
+
+if (!tinytex::is_tinytex()) {
+  tinytex::install_tinytex()
+}
+```
 
 ## 1.1 Describe the Social Problem
 
@@ -40,17 +51,7 @@ The dataset used is derived from the United States Census Bureau and includes in
 
 ## 2.2 Import and Prepare the Dataset
 
-```{r setup, include=FALSE}
-library(tidyverse)
-library(tidyr)
-library(readr)
-library(ggplot2)
-library(rnaturalearth)
-library(maps)
-library(dplyr)
-library(purrr)
-library(stringr)
-```
+library(tidyverse) library(tidyr) library(readr) library(ggplot2) library(rnaturalearth) library(maps) library(dplyr) library(purrr) library(stringr)
 
 ```{r import-data}
 # The first dataset is from the dataset "selected characteristics of the uninsured in the US from 2010-2023, exclduing 2020 from the US Census Bureau. These are the ACS one-year estimates.
@@ -1745,6 +1746,7 @@ all_states_100 = all_states %>%
 ```
 
 ## datacleaning Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
+
 ```{r}
 #Here I am making a new variable which is the GDP growth rate of the states
 
@@ -1783,9 +1785,6 @@ View(gdp_growth)
 #delete rows from 2009
 gdp_growth = gdp_growth[-c(1:45), ]
 ```
-
-
-
 
 # Part 3 – Visualize and Analyze the Data
 

@@ -10,6 +10,7 @@ subgroup_total = all_states_100 %>%
          series == "Uninsured.Share",
          income_group == "Total civilian noninstitutionalized population")
 # create a subset data of 2017 and middle income
+middle_income = middle_income[middle_income$series == "Total.Uninsured",]
 #subset that will be used is middle_income of 2017
 #calculate quartiles
 quartiles = quantile(middle_income$value, probs = c(0, 0.25, 0.5, 0.75, 1))

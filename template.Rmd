@@ -21,7 +21,7 @@ output:
 knitr::opts_chunk$set(include = FALSE)
 options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
-packages <- c("rmarkdown", "tinytex", "rnaturalearth", "rnaturalearthdata", "maps", "tidyverse")
+packages <- c("rmarkdown", "tinytex", "rnaturalearth", "rnaturalearthdata", "maps", "tidyverse", "tidyr", "dplyr", "renv")
 
 installed <- packages %in% rownames(installed.packages())
 if (any(!installed)) {
@@ -30,7 +30,7 @@ if (any(!installed)) {
 
 invisible(lapply(packages, library, character.only = TRUE))
 
-if (!tinytex::is_tinytex()) {
+if (!tinytex::is_tinytex()) { 
   tinytex::install_tinytex()
 }
 ```
@@ -53,7 +53,7 @@ The dataset used is derived from the United States Census Bureau and includes in
 
 ## 2.2 Import and Prepare the Dataset
 
-library(tidyverse) library(tidyr) library(readr) library(ggplot2) library(rnaturalearth) library(maps) library(dplyr) library(purrr) library(stringr)
+**First dataset:** **"Selected Characteristics of The Uninsured in the U.S."**
 
 ```{r import-data, include=FALSE}
 # The first dataset is from the dataset "selected characteristics of the uninsured in the US from 2010-2023, exclduing 2020 from the US Census Bureau. These are the ACS one-year estimates.
@@ -110,14 +110,16 @@ dataset_uninsured_population_2022 = read_csv("data insured population 2010-2023/
 ACSST1Y2023_S2702_2025_06_04T165512 <- read_csv("data insured population 2010-2023/ACSST1Y2023.S2702-2025-06-04T165512.csv")
 dataset_uninsured_population_2023 = read_csv("data insured population 2010-2023/ACSST1Y2023.S2702-2025-06-04T165512.csv")
 
-################################################################################
+```
 
+**Second Dataset: "SAGDP1 State Annual Gross Domestic Product Summary", Statistic: "Real GDP (millions of chained 2017 dollars)"**
+
+```{r import second dataset, figure.show="asis", include=F}
 #The second dataset is from the Bureau of Economic Analysis and is the annual real GDP of the 44 states we include in our analysis from the year 2009-2023, excluding 2020
 Table_GDP_absolute_values_Table_3_ <- read_csv("data GDP/Table GDP absolute values - Table (3).csv")
 
 #renaming the table
 table_GDP = Table_GDP_absolute_values_Table_3_
-
 ```
 
 ## Data cleaning: Datasets of Uninsured Population and The Creation of The New Variable: The Uninsured Share
@@ -1799,7 +1801,7 @@ gdp_growth = gdp_growth[-c(1:45), ]
 
 -   describe here that we mapped here the spatial variation of the uninsured population of the states of which we have the ACS one year estimates of and that we first created a subset of 2023 of the big dataset all_states_100 and that we plotted Alaska seperately otherwise the whole map would be too small to visualize.
 
-```{r visualize spatial, include=FALSE}
+```{r visualize spatial, include=FALSE, fig.show = "asis"}
 #Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data
 
 spatial_df = all_states %>%
@@ -1861,7 +1863,7 @@ ggplot(alaska_data) +
 
 -   describe that Texas stood out in our spatial variation analysis and that we wanted to dig deeper into Texas's share of uninsured population over time from 2010 until 2023, except for 2020 and that we wanted to see if economic growth played a role in this.
 
-```{r visualization temporal, include=FALSE}
+```{r visualization temporal, include=FALSE, fig.show = "asis"}
 #Here I am making a sub dataframe for the temporal visualization with the GDP growth rate of Texas and another subset of the share of uninsured population in the US over the years
 
 #subset Texas share of uninsured population
@@ -1935,7 +1937,7 @@ ggplot() +
 
 -   describe that already the KFF (2024) found that the uninsured people in the US are more likely to be low income and that we were wondering what the state of the middle-income group is as they earn too much for Medicaid but not enough for private insurance. 2017 is the year after Trump became president in 2016.
 
-```{r visualization subgroup, include=FALSE}
+```{r visualization subgroup, include=FALSE, fig.show = "asis"}
 #create a subset of data 2017 for total unsinred share in the states
 
 library(dplyr)
@@ -1984,7 +1986,7 @@ ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) +
 
 -   describe here what happened in Arkansas in 2018 and why the wanted to implement the work requirements and what these requirements were. and that Arkansas is the treatment group and the other 43 states are the control group and the ware analysing if the implementation had significant impact on the uninsured rates compared to the change in the control group which is the weighted average of the uninsured rates.
 
-```{r visualization event, include=FALSE}
+```{r visualization event, include=FALSE, fig.show = "asis"}
 #Here I am making a sub dataframe for the event analysis of the implementation of stricter conditions for Medicaid in 2018 in Arkansas
 
 #sub dataframe Arkansas share uninsured for all the years
@@ -2046,8 +2048,6 @@ ggplot() + geom_line(data = weighted_avg_2, aes(x = year, y = weighted_avg, colo
 ```
 
 ## 3.2 Identify Trends and Patterns
-
-
 
 # Part 4 – Communicate Findings
 

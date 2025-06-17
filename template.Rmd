@@ -39,21 +39,37 @@ Part 1 – Identify a Social Problem
 
 ## 1.1 Describe the Social Problem
 
-The high number of uninsured Americans is a persistent issue with substantial social and economic consequences. According to the U.S. Census Bureau, over 27 million Americans lacked health insurance in 2022. This lack of coverage can lead to delayed medical care, poor health outcomes, and financial instability.
+The large number of uninsured people in the United States remains a deeply rooted social issue with serious individual and systemic consequences. As of 2022, over 27 million Americans—about one in every twelve—lacked health insurance (KFF, 2023). For those without coverage, the consequences can be severe. Uninsured individuals are far more likely to delay or skip necessary medical care due to cost, resulting in worsened health outcomes, preventable hospitalizations, and even premature death. Beyond the physical toll, the financial burden of paying for care out-of-pocket can be devastating, often leading to medical debt, credit problems, and long-term economic instability (Davis, 2007).
+
+The problem doesn’t stop at the individual level. When millions are uninsured, the ripple effects are felt throughout the healthcare system. Hospitals and clinics often absorb the costs of uncompensated care, placing financial strain on public health resources and increasing costs for those who are insured. In the words of Davis (2007), “The uninsured are not just other people—they are our neighbors, co-workers, and family members,” and the consequences of their lack of coverage ripple through communities in both visible and invisible ways. The issue of uninsurance in America is not just a matter of personal misfortune; it reflects broader structural gaps in the nation’s approach to healthcare access and economic inclusion.
 
 ## 1.2 Provide Background on the Problem
 
-Since the implementation of the Affordable Care Act (ACA) in 2010, the number of uninsured has decreased, but disparities remain. People with low income, people of color, and those living in states that did not expand Medicaid are disproportionately affected. Health insurance in the U.S. is often tied to employment, further complicating access for those in part-time, temporary, or informal jobs.
+Although the Affordable Care Act (ACA), passed in 2010, marked a major turning point by expanding access to coverage through Medicaid and subsidized insurance marketplaces, millions of Americans remain uninsured. According to the Kaiser Family Foundation, the majority of the uninsured today are low-income individuals, disproportionately people of color, and residents of states that have not expanded Medicaid (KFF, 2023). This uneven policy landscape has created deep geographic disparities in access to health insurance, especially across the South and parts of the Midwest.
+
+One of the key structural challenges is that health insurance in the United States is closely tied to employment. As a result, people working in part-time, temporary, or informal jobs—who are often already economically vulnerable—are less likely to receive employer-sponsored insurance (KFF, 2023). This makes them particularly susceptible to losing coverage during periods of economic instability or job transitions. As Davis (2007) points out, many of the uninsured “fall through the cracks,” caught between eligibility thresholds and the high cost of private insurance. The problem is not only about whether coverage exists, but about whether it is affordable and accessible to the people who need it most.
+
+In short, while progress has been made since the ACA, significant gaps in the system persist—especially for those at the intersection of poverty, racial inequity, and policy exclusion. These gaps leave millions without the basic security of knowing they can access healthcare when they need it.
 
 # Part 2 – Describe and Acquire Data
 
-## 2.1 Describe the Dataset
+## 2.1 Describe the Data sets
 
-The dataset used is derived from the United States Census Bureau and includes individual-level data on health insurance coverage, demographics, and employment status.
+Our analysis is based on two main data sets: one from the U.S. Census Bureau and one from the Bureau of Economic Analysis (BEA), which together allowed us to explore patterns in health insurance coverage alongside economic conditions across U.S. states.
+
+The primary data set comes from the U.S. Census Bureau’s *American Community Survey (ACS) 1-Year Estimates*, specifically the table *Selected Characteristics of the Uninsured in the United States*. We used data from 2010 to 2023, excluding 2020 due to a lack of 1-year estimates that year. We also excluded eight small states and territories—Delaware, the District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming—because they are not consistently included in the 1-year estimates and are instead only available in the 5-year version. Since our goal was to analyze annual trends, we relied on the 1-year estimates for their timeliness and ability to reflect short-term changes, such as those driven by economic shifts or policy reforms.
+
+This ACS data set provides state-level figures on the civilian non-institutionalized population, including both the total population and the number of uninsured individuals. It also includes a wide range of demographic and socioeconomic characteristics. For our analysis, we focused only on the total population and household income (inflation-adjusted), which were essential for calculating the uninsured share and understanding economic context.
+
+To supplement this, we used economic data from the BEA, specifically the table *SAGDP1 – State Annual Gross Domestic Product Summary*. This data set provides real GDP figures in millions of chained 2017 dollars for each state and aggregate regions, covering the years 1997 through 2024. Using inflation-adjusted GDP allows for consistent comparisons over time and across states.
+
+Together, these two data sets gave us a comprehensive view of how health insurance coverage has evolved across the U.S., and how it may be linked to broader economic trends at the state level.
 
 ## 2.2 Import and Prepare the Dataset
 
-**First dataset:** **"Selected Characteristics of The Uninsured in the U.S."**
+**First data set:** **"Selected Characteristics of The Uninsured in the U.S."**
+
+-   Here we imported the first data set from the U.S. Census Bureau and named them "dataset_uninsured_population\_*year"* from 2010-2023, excl 2020.
 
 ```{r import-data, include=FALSE}
 # The first dataset is from the dataset "selected characteristics of the uninsured in the US from 2010-2023, exclduing 2020 from the US Census Bureau. These are the ACS one-year estimates.
@@ -112,19 +128,31 @@ dataset_uninsured_population_2023 = read_csv("data insured population 2010-2023/
 
 ```
 
-**Second Dataset: "SAGDP1 State Annual Gross Domestic Product Summary", Statistic: "Real GDP (millions of chained 2017 dollars)"**
+**Second Data set: "SAGDP1 State Annual Gross Domestic Product Summary", Statistic: "Real GDP (millions of chained 2017 dollars)"**
+
+-   Here we imported the second data set from the Bureau of Economic Analysis of the annual GDP of the states from 2009-2023 and named it "table_GDP"
 
 ```{r import second dataset, figure.show="asis", include=F}
 #The second dataset is from the Bureau of Economic Analysis and is the annual real GDP of the 44 states we include in our analysis from the year 2009-2023, excluding 2020
-Table_GDP_absolute_values_Table_3_ <- read_csv("data GDP/Table GDP absolute values - Table (3).csv")
+annual_gdp_Table_4_ <- read_csv("data GDP/annual gdp - Table (4).csv")
 
 #renaming the table
-table_GDP = Table_GDP_absolute_values_Table_3_
+table_GDP = annual_gdp_Table_4_
 ```
 
-## Data cleaning: Datasets of Uninsured Population and The Creation of The New Variable: The Uninsured Share
+## Data cleaning: Data sets of Uninsured Population and The Creation of The New Variable: The Uninsured Share
 
--   describe here which states we first took out the margin of errors, then we took out the 6 small states and tell which states they are (deleware, district of columbia, hawaii, puerto rico, north dakota, rhode island, vermont and wyoming check de spelling!!), then that we took out the metadata and tell which metadata that is: age, sex, race and hispanic or latino origin, nativity and U.S. citizenship status, disability status, residence 1 year ago, educational attainment, employment status, work experience, civilian noninstitutionalized workers 16 years and over, earnings in the past 12 months and ratio of income to poverty level in the past 12 months. and that we only kept the total civilian noninstitutionalized population and household income (inflation adjusted). After that we coerced the character values in the yearly datasets no numeric and created our new variable of uninsured share. after that we combined all the yearly datasets
+To prepare the data for analysis, we began by removing all margins of error from the original Census data sets. While margins of error are important for assessing statistical precision, they were not necessary for our purposes, which focused on comparing overall trends in health insurance coverage across states and years. Removing them helped simplify the data set and reduce complexity without compromising our analytical goals.
+
+A more structural challenge involved the inclusion of smaller states and territories. Since 2016, the Census Bureau’s 1-year estimates no longer cover certain low-population areas, meaning they are missing from some years in our timespan. To ensure consistency across time, we decided to exclude eight such places entirely from our analysis. These were Delaware, the District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming. By removing them, we ensured that our data set included only states that were present in every applicable year from 2010 to 2023 (with the exception of 2020, when no data was published due to the COVID-19 pandemic).
+
+After resolving issues of consistency and coverage, we turned our attention to the structure of the data itself. Each annual data set included a wide range of metadata—demographic and socioeconomic characteristics that, while valuable for other types of research, were not essential to our primary analysis of insurance coverage trends. We removed variables related to age, sex, race and Hispanic or Latino origin, nativity and U.S. citizenship status, disability status, residence one year ago, educational attainment, employment status, work experience, civilian non-institutionalized workers aged 16 and over, earnings in the past 12 months, and the ratio of income to the poverty level in the past 12 months. From all this, we retained only the total civilian non-institutionalized population and household income (adjusted for inflation), which were directly relevant to our questions about insurance and economic context.
+
+To ensure the data was ready for calculations, we then converted all numeric values that had been stored as character strings—often due to formatting like commas—into actual numeric variables. This was a necessary step for performing any reliable mathematical operations.
+
+One of the most important transformations in our cleaning process was the creation of a new variable: uninsured share. The original data provided the total population and the total number of uninsured individuals for each state and year. To make this more interpretable and comparable, we calculated the uninsured share by dividing the number of uninsured people by the total population and multiplying the result by 100. This gave us a percentage that reflects the proportion of each state’s population without health insurance. Expressing the data this way allows for easier comparisons across time and across states, regardless of differences in population size. It helps illuminate broader patterns in insurance coverage that would be difficult to spot using absolute numbers alone.
+
+After all these cleaning and transformation steps, we combined the individual yearly data sets into a single, comprehensive data set covering the period from 2010 to 2023 (excluding 2020). This final merged file allowed us to analyze long-term trends and relationships in a consistent and structured way.
 
 ```{r datacleaning of the yearly datasets Uninsured Population 2010,2023, include=FALSE}
 # This is me cleaning out the data insured population from 2010-2016 getting out the margin of error
@@ -1752,13 +1780,25 @@ all_states_100 = all_states_100 %>%
   rename(income_group = `Label (Grouping)`)
 ```
 
-## datacleaning Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
+## Data cleaning: Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
+
+For the economic data from the Bureau of Economic Analysis, we worked with the *SAGDP1 – State Annual Gross Domestic Product Summary* table, which reports real GDP per state in millions of chained 2017 dollars. Before analysis, we cleaned this data set to align it with the structure and timeframe of our health insurance data. First, we removed all columns corresponding to years outside our scope—specifically, 1997 through 2008, as well as 2020 and 2024. We also filtered out states and regions that were not included in our main data set or that represented aggregate regions rather than individual states. Specifically, we excluded Delaware, District of Columbia, Hawaii, Vermont, Wyoming, and Rhode Island, as well as the regional aggregates: New England, Mideast, Great Lakes, Plains, Southeast, Southwest, Rocky Mountain, and Far West. Also here, the values were stored as "double", so we coerced the values to numeric, so that we are able to compute our new variable. After these adjustments, we renamed the cleaned data set `table_GDP` for use in our analysis.
+
+From this cleaned table, we created a new variable: annual real GDP growth, calculated for each state and year by measuring the year-over-year percentage change in real GDP. This variable allowed us to capture how quickly or slowly each state’s economy was growing over time. Including GDP growth in our analysis adds important context: it helps us explore whether changes in economic performance are linked to shifts in health insurance coverage. For example, we can examine whether periods of economic expansion correspond with improvements in coverage rates. By combining this with our uninsurance data, we gain a more nuanced understanding of how economic conditions may influence access to healthcare.
 
 ```{r include=FALSE}
 #Here I am making a new variable which is the GDP growth rate of the states
 
 #renaming the table
-table_GDP = Table_GDP_absolute_values_Table_3_
+table_GDP = annual_gdp_Table_4_
+
+#cleaning out the table of the years 1997:2008, 2020 and 2024 and removing the states/regions that are not included in our main data set
+
+table_GDP = annual_gdp_Table_4_[, !(names(annual_gdp_Table_4_) %in% c("1997", "1998","1999","2000", "2001","2002","2003","2004","2005","2006","2007","2008","2020","2024"))]
+
+table_GDP = table_GDP[-c(9,10,13,36,41,47,52,54,55,56,57,58,59,60),]
+table_GDP = table_GDP[-c(1),]
+table_GDP = table_GDP[-c(45),]
 
 #class coercion of double to numeric of all columns but the first column
 table_GDP[, -1] = lapply(table_GDP[, -1], as.numeric)

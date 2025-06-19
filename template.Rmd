@@ -5,7 +5,7 @@ author: |
   Catherina Mikhail, 2847118  
   Charlotte Craenen, 2865572  
   Hugo van As, 2848225 
-  Indy Pleijter  
+  Indy Pleijter, 2810379
   Julian Zeguers  
   Wies Polderman  
   Tutorial group 5, group 4 – J.F. Fitzgerald

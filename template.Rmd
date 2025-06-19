@@ -21,7 +21,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
-packages <- c("rmarkdown", "tinytex", "rnaturalearth", "rnaturalearthdata", "maps", "tidyverse", "tidyr", "dplyr", "renv")
+packages <- c("rmarkdown", "tinytex", "rnaturalearth", "rnaturalearthdata", "maps", "tidyverse", "tidyr", "dplyr", "renv", "rnaturalearthhires")
 
 installed <- packages %in% rownames(installed.packages())
 if (any(!installed)) {
@@ -2020,7 +2020,7 @@ library(ggplot2)
 
 ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) + 
   geom_boxplot()+
-  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Quartile Analaysis of Uninsured Share among Middle-Income in the US, 2017") + 
+  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Uninsured Share among Middle-Income in the US, 2017") + 
   theme_classic()
 ```
 
@@ -2083,7 +2083,7 @@ ggplot() + geom_line(data = weighted_avg_2, aes(x = year, y = weighted_avg, colo
   labs(x = "Year", y = "Percentages Point of the Uninsured Population", title = "AR Medicaid Work Requirements, 2018") + 
   scale_color_manual(values = c("Weighted Average" = "darkblue", "Arkansas Share Uninsured" = "darkred")) +
   theme_classic() + geom_vline (xintercept = event_year, color = "black") + annotate("text", x = event_year + 0.3 , y = max(c(weighted_avg_2$weighted_avg, arkansas_event$value)),
-                                                                                     label = "Implementation of Requirements in 2018", hjust = 0, size =3, fontface = "bold") +
+                                                                                     label = "Implementation \nRequirements", hjust = 0, size =3, fontface = "bold") +
   scale_x_continuous(breaks = c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022,2023)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -2171,4 +2171,5 @@ Expand premium subsidies beyond current income thresholds, as the middle-income 
 -   Sommers, B. D., Baicker, K., & Epstein, A. M. (2012). *Mortality and access to care among adults after state Medicaid expansions*. *New England Journal of Medicine*, 367(11), 1025–1034. <https://doi.org/10.1056/NEJMsa1202099>
 
 ## A.2 Session Info
-https://github.com/catherinamikhail/Programming-for-Economists-uninsured-US-population.git 
+
+<https://github.com/catherinamikhail/Programming-for-Economists-uninsured-US-population.git>

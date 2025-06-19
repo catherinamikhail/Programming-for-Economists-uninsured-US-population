@@ -40,5 +40,5 @@ library(ggplot2)
 
 ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) + 
   geom_boxplot()+
-  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Quartile Analaysis of Uninsured Share among Middle-Income in the US, 2017") + 
+  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Uninsurance Among U.S. Middle-Income Groups, 2017") + 
   theme_classic()

@@ -5,8 +5,8 @@ author: |
   Catherina Mikhail (2847118)  
   Charlotte Craenen (2865572)  
   Hugo van As  
-  Indy Pleijter  
-  Julian Zeguers (2772646)  
+  Indy Pleijter (2810379) 
+  Julian Zeguers  
   Wies Polderman  
   Tutorial group 5, group 4 – J.F. Fitzgerald
 date: "2025-06-24"
@@ -50,7 +50,7 @@ library(rnaturalearthhires)
 
 The large number of uninsured people in the United States represents a significant social issue with serious consequences for individuals and the healthcare system. As of 2022, over 27 million Americans—approximately one in twelve people—lacked health insurance coverage (KFF, 2023). This lack of coverage creates substantial barriers to healthcare access and has wide-ranging effects on both personal and public health.
 
-For individuals without insurance, the consequences are often severe. Uninsured people are much more likely to delay or avoid necessary medical care due to cost concerns, which leads to worse health outcomes, preventable emergency room visits, and higher rates of deaths. The financial impact is equally serious, as uninsured individuals must pay full price for medical services, often resulting in medical debt, damaged credit, and long-term financial hardship (Davis, 2007).
+For individuals without insurance, the consequences are often severe. Uninsured people are much more likely to delay or avoid necessary medical care due to cost concerns, which leads to worse health outcomes, preventable emergency room visits, and higher rates of preventable deaths. The financial impact is equally serious, as uninsured individuals must pay full price for medical services, often resulting in medical debt, damaged credit, and long-term financial hardship (Davis, 2007).
 
 The problem extends beyond individual impacts to affect the entire healthcare system. When uninsured patients cannot pay for their care, hospitals and clinics must absorb these costs as uncompensated care. This financial burden strains healthcare providers and ultimately increases costs for everyone else through higher insurance premiums and taxes. As Davis (2007) explains, the uninsured population includes "our neighbors, co-workers, and family members," making this a community-wide issue that affects society as a whole.
 
@@ -70,7 +70,7 @@ The persistence of uninsurance reflects broader structural challenges in America
 
 This analysis utilizes two primary datasets to examine patterns in health insurance coverage and their relationship to economic conditions across U.S. states.
 
-**U.S. Census Bureau Data** The main data set comes from the U.S. Census Bureau's American Community Survey (ACS) 1-Year Estimates, specifically the table "Selected Characteristics of the Uninsured in the United States." This data set covers 2010 to 2023, excluding 2020 due to the absence of the estimates for that year.
+**U.S. Census Bureau Data** The main data set comes from the U.S. Census Bureau's American Community Survey (ACS) 1-Year Estimates, specifically the table "Selected Characteristics of the Uninsured in the United States." This data set covers the period from 2010 to 2023, excluding 2020 due to the absence of 1-year estimates for that year.
 
 Eight smaller states and territories were excluded from the analysis—Delaware, District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming—because they are not consistently included in the 1-year estimates. The 1-year estimates were chosen over 5-year estimates because they provide more timely data that can capture short-term changes from economic shifts or policy reforms.
 
@@ -2171,3 +2171,4 @@ Expand premium subsidies beyond current income thresholds, as the middle-income 
 -   Sommers, B. D., Baicker, K., & Epstein, A. M. (2012). *Mortality and access to care among adults after state Medicaid expansions*. *New England Journal of Medicine*, 367(11), 1025–1034. <https://doi.org/10.1056/NEJMsa1202099>
 
 ## A.2 Session Info
+https://github.com/catherinamikhail/Programming-for-Economists-uninsured-US-population.git 

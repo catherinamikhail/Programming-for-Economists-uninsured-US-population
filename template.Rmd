@@ -2171,3 +2171,4 @@ Expand premium subsidies beyond current income thresholds, as the middle-income 
 -   Sommers, B. D., Baicker, K., & Epstein, A. M. (2012). *Mortality and access to care among adults after state Medicaid expansions*. *New England Journal of Medicine*, 367(11), 1025–1034. <https://doi.org/10.1056/NEJMsa1202099>
 
 ## A.2 Session Info
+https://github.com/catherinamikhail/Programming-for-Economists-uninsured-US-population.git 

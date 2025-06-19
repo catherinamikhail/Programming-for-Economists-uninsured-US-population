@@ -1,10 +1,10 @@
 ---
-title: "Visualizing the Uninsured: A Data Science Perspective on U.S. Health Coverage"
+title: "Visualizing the Uninsured: A Data-Driven Perspective on U.S. Health Coverage"
 author: |
-  Eduardo Sáenz-Messía Laborda  
-  Catherina Mikhail (2847118)  
-  Charlotte Craenen (2865572)  
-  Hugo van As  
+  Eduardo Sáenz-Messía Laborda, 2861597
+  Catherina Mikhail, 2847118  
+  Charlotte Craenen, 2865572  
+  Hugo van As, 2848225 
   Indy Pleijter  
   Julian Zeguers  
   Wies Polderman  
@@ -2020,7 +2020,7 @@ library(ggplot2)
 
 ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) + 
   geom_boxplot()+
-  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Quartile Analaysis of Uninsured Share among Middle-Income in the US, 2017") + 
+  labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Uninsurance Among U.S. Middle-Income Groups, 2017") + 
   theme_classic()
 ```
 
@@ -2083,7 +2083,7 @@ ggplot() + geom_line(data = weighted_avg_2, aes(x = year, y = weighted_avg, colo
   labs(x = "Year", y = "Percentages Point of the Uninsured Population", title = "AR Medicaid Work Requirements, 2018") + 
   scale_color_manual(values = c("Weighted Average" = "darkblue", "Arkansas Share Uninsured" = "darkred")) +
   theme_classic() + geom_vline (xintercept = event_year, color = "black") + annotate("text", x = event_year + 0.3 , y = max(c(weighted_avg_2$weighted_avg, arkansas_event$value)),
-                                                                                     label = "Implementation of Requirements in 2018", hjust = 0, size =3, fontface = "bold") +
+                                                                                     label = "Implementation Requirements", hjust = 0, size =3, fontface = "bold") +
   scale_x_continuous(breaks = c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022,2023)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -2157,17 +2157,44 @@ Expand premium subsidies beyond current income thresholds, as the middle-income 
 
 ## A.1 References
 
--   Davis, K. (2007). *Uninsured in America: Problems and possible solutions*. *BMJ*, 334(7589), 346–348. <https://doi.org/10.1136/bmj.39091.493588.be>
--   KFF (2023). *Key Facts About the Uninsured Population*. <https://www.kff.org/uninsured/issue-brief/key-facts-about-the-uninsured-population/>
--   Sommers, B. D., et al. (2019). *Medicaid Work Requirements—Results from the First Year in Arkansas*. *New England Journal of Medicine*, 381(11), 1073–1082. <https://doi.org/10.1056/NEJMsr1901772>
--   Bailey, M. J., et al. (2017). *State Medicaid expansions and mortality, revisited: A cost-benefit analysis*. *American Journal of Health Economics*, 3(4), 392–421. <https://doi.org/10.1162/AJHE_a_00080>
+-   **Bailey, M. J., et al.** (2017). State Medicaid expansions and mortality, revisited: A cost-benefit analysis. *American Journal of Health Economics, 3*(4), 392–421. <https://doi.org/10.1162/AJHE_a_00080>
 
-<!-- -->
+-   **Collins, S. R., Gunja, M. Z., & Aboulafia, G. N.** (2020, August 19). *U.S. health insurance coverage in 2020: A looming crisis in affordability*. The Commonwealth Fund. Retrieved June 19, 2025, from <https://www.commonwealthfund.org/publications/issue-briefs/2020/aug/looming-crisis-health-coverage-2020-biennial>
 
--   Collins, S. R., Gunja, M. Z., & Aboulafia, G. N. (2020). *U.S. health insurance coverage in 2020: A looming crisis in affordability*. *The Commonwealth Fund*.
+-   **Davis, K.** (2007). Uninsured in America: Problems and possible solutions. *BMJ, 334*(7589), 346–348. <https://doi.org/10.1136/bmj.39091.493588.be>
 
-<!-- -->
+-   **KFF.** (2023). *Key facts about the uninsured population*. <https://www.kff.org/uninsured/issue-brief/key-facts-about-the-uninsured-population/>
 
--   Sommers, B. D., Baicker, K., & Epstein, A. M. (2012). *Mortality and access to care among adults after state Medicaid expansions*. *New England Journal of Medicine*, 367(11), 1025–1034. <https://doi.org/10.1056/NEJMsa1202099>
+-   **Sommers, B. D., Baicker, K., & Epstein, A. M.** (2012). Mortality and access to care among adults after state Medicaid expansions. *New England Journal of Medicine, 367*(11), 1025–1034. <https://doi.org/10.1056/NEJMsa1202099>
+
+-   **Sommers, B. D., et al.** (2019). Medicaid work requirements—Results from the first year in Arkansas. *New England Journal of Medicine, 381*(11), 1073–1082. <https://doi.org/10.1056/NEJMsr1901772>
+
+-   **U.S. Bureau of Economic Analysis.** (n.d.). *GDP & personal income: Interactive data*. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://apps.bea.gov/itable/?ReqID=70&step=1>
+
+-   **U.S. Census Bureau.** (2011, September). *Income, poverty, and health insurance coverage in the United States: 2010* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2010.HIC4>
+
+-   **U.S. Census Bureau.** (2012, September). *Income, poverty, and health insurance coverage in the United States: 2011* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2011.HIC4>
+
+-   **U.S. Census Bureau.** (2013, September). *Income, poverty, and health insurance coverage in the United States: 2012* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2012.HIC4>
+
+-   **U.S. Census Bureau.** (2014, September). *Health insurance coverage in the United States: 2013* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2013.HIC4>
+
+-   **U.S. Census Bureau.** (2015, September). *Health insurance coverage in the United States: 2014* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2014.HIC4>
+
+-   **U.S. Census Bureau.** (2016, September). *Health insurance coverage in the United States: 2015* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2015.HIC4>
+
+-   **U.S. Census Bureau.** (2017, September). *Health insurance coverage in the United States: 2016* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2016.HIC4>
+
+-   **U.S. Census Bureau.** (2018, September). *Health insurance coverage in the United States: 2017* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2017.HIC4>
+
+-   **U.S. Census Bureau.** (2019, September). *Health insurance coverage in the United States: 2018* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2018.HIC4>
+
+-   **U.S. Census Bureau.** (2020, September). *Health insurance coverage in the United States: 2019* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2019.HIC4>
+
+-   **U.S. Census Bureau.** (2022, September). *Health insurance coverage in the United States: 2021* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2021.HIC4>
+
+-   **U.S. Census Bureau.** (2023, September 12). *Income, poverty, and health insurance coverage in the United States: 2022* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2022.HIC4>
+
+-   **U.S. Census Bureau.** (2024, September). *Health insurance coverage in the United States: 2023* [American Community Survey 1-year estimates; table HIC‑4]. U.S. Department of Commerce. Retrieved June 19, 2025, from <https://data.census.gov/table/…/ACSST1Y2023.HIC4>
 
 ## A.2 Session Info

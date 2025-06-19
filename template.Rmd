@@ -18,7 +18,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 5 , fig.height = 4.5)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
 packages <- c("rmarkdown", "tinytex", "rnaturalearth", "rnaturalearthdata", "maps", "tidyverse", "tidyr", "dplyr", "renv")

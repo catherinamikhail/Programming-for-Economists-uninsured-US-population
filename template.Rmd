@@ -1837,7 +1837,7 @@ gdp_growth = gdp_growth[-c(1:45), ]
 
 To examine the spatial distribution of uninsured populations across the United States, we mapped the geographic variation using American Community Survey (ACS) one-year estimates for available states. Initially, we created a subset of the comprehensive all_states_100 data set, focusing specifically on 2023 data to ensure temporal consistency. Subsequently, we generated separate visualizations for Alaska due to its substantial geographic scale, which would otherwise compromise the readability and detail of the continental United States map when displayed at the same resolution.
 
-```{r visualize spatial, echo = FALSE, fig.cap = "", out.width = "80%"}
+```{r visualize spatial, echo = FALSE, fig.cap = "", out.width= "90%"}
 #Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data
 
 spatial_df = all_states %>%
@@ -2125,7 +2125,7 @@ The subgroup analysis provided evidence that income distribution alone does not 
 
 ## Propose Solutions or Policy Recommendations
 
-## Key Policy Solutions
+**Key Policy Solutions**
 
 Based on the analysis findings, four targeted policy interventions are recommended to address persistent uninsurance across the United States.
 

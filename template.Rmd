@@ -1,14 +1,14 @@
 ---
 title: "Visualizing the Uninsured: A Data Science Perspective on U.S. Health Coverage"
 author: |
-  - Eduardo Sáenz-Messía Laborda, 2861597
-  - Catherina Mikhail, 2847118
-  - Charlotte Craenen, 2865572
-  - Hugo van As, 2848225
-  - Indy Pleijter, 2810379
-  - Julian Zeguers, 2772646
-  - Wies Polderman, 2824987
-  - Tutorial group 5, group 4 – J.F. Fitzgerald
+  Eduardo Sáenz-Messía Laborda, 2861597  
+  Catherina Mikhail, 2847118  
+  Charlotte Craenen, 2865572  
+  Hugo van As, 2848225  
+  Indy Pleijter, 2810379  
+  Julian Zeguers, 2772646  
+  Wies Polderman, 2824987  
+  Tutorial group 5, group 4 – J.F. Fitzgerald
 date: "2025-06-24"
 output:
   pdf_document:

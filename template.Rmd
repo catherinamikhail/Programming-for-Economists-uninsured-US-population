@@ -50,6 +50,11 @@ library(rnaturalearthhires)
 if (!tinytex::is_tinytex()) { 
   tinytex::install_tinytex()
 }
+if (Sys.info()["sysname"] == "Darwin") {  # macOS
+  if (!file.exists("/Applications/Utilities/XQuartz.app")) {
+    message("🔴 XQuartz is not installed. Please install from https://www.xquartz.org/ and restart your Mac.")
+  }
+}
 
 ```
 

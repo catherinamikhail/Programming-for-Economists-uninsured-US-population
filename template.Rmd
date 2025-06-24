@@ -15,6 +15,8 @@ output:
     latex_engine: xelatex
     toc: true
     number_sections: true
+    fig_caption: true
+    keep_tex: true
 ---
 
 ```{r setup, include=FALSE}
@@ -58,7 +60,7 @@ if (Sys.info()["sysname"] == "Darwin") {  # macOS
 
 ```
 
-**Part 1 – Identify a Social Problem**
+## **Part 1 – Identify a Social Problem**
 
 ## Describe the Social Problem
 
@@ -98,7 +100,7 @@ The ACS dataset provides state-level information on the civilian non-institution
 
 **First data set:** **"Selected Characteristics of The Uninsured in the U.S."**
 
-Here we imported the first data set from the U.S. Census Bureau and named them "data set_uninsured_population\_*year"* from 2010-2023, excl 2020.
+Here we imported the first data set from the U.S. Census Bureau and named them "data set_uninsured_population\_*year"* from 2010-2023, excl 2020. The dataset originally contains 120 observations and 209 variables with in the observations the metadata and in the columns the total population, uninsured population and the margin of errors of the states in the U.S.
 
 ```{r import-data, include=FALSE}
 # The first dataset is from the dataset "selected characteristics of the uninsured in the US from 2010-2023, exclduing 2020 from the US Census Bureau. These are the ACS one-year estimates.
@@ -157,9 +159,14 @@ dataset_uninsured_population_2023 = read_csv("data insured population 2010-2023/
 
 ```
 
+```{r head uninsured population}
+
+head(dataset_uninsured_population_2010[c(1,105:11),c(2,4,6,8)])
+```
+
 **Second Data set: "SAGDP1 State Annual Gross Domestic Product Summary", Statistic: "Real GDP (millions of chained 2017 dollars)"**
 
-Here we imported the second data set from the Bureau of Economic Analysis of the annual GDP of the states from 2009-2023 and named it "table_GDP"
+Here we imported the second data set from the Bureau of Economic Analysis of the annual GDP of the states from 1997-2024 and named it "table_GDP". The dataset originally contains 60 observations with all the states and regions of the U.S. and 29 variables with the years.
 
 ```{r import second dataset, figure.show="asis", include=F}
 #The second dataset is from the Bureau of Economic Analysis and is the annual real GDP of the 44 states we include in our analysis from the year 2009-2023, excluding 2020
@@ -167,6 +174,10 @@ annual_gdp_Table_4_ <- read_csv("data GDP/annual gdp - Table (4).csv")
 
 #renaming the table
 table_GDP = annual_gdp_Table_4_
+```
+
+```{r head gdp dataset}
+head(table_GDP %>% select(1:5))
 ```
 
 ## Data cleaning: Data sets of Uninsured Population and The Creation of The New Variable: The Uninsured Share
@@ -177,7 +188,7 @@ We streamlined the data structure by removing extensive metadata not essential t
 
 Most importantly, we created an uninsured share variable by dividing total uninsured individuals by total population and multiplying by 100 for each state and year. This percentage enables easier comparisons across time and states regardless of population differences. After these steps, we combined the individual yearly datasets into a single comprehensive dataset covering 2010 to 2023, excluding 2020, enabling consistent analysis of long-term trends.
 
-```{r datacleaning of the yearly datasets Uninsured Population 2010,2023, include=FALSE}
+```{r datacleaning of the yearly datasets Uninsured Population 2010,2023 margin of error, include=FALSE}
 # This is me cleaning out the data insured population from 2010-2016 getting out the margin of error
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2010)))]
 
@@ -205,8 +216,9 @@ dataset_uninsured_population_2022 = dataset_uninsured_population_2022[, which(!g
 
 dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Margin of Error", colnames(dataset_uninsured_population_2023)))]
 
-###############################################################################
+```
 
+```{r data cleaning taking out the states, include=FALSE}
 #This is me cleaning out the columns of Delaware
 dataset_uninsured_population_2010 = dataset_uninsured_population_2010[, which(!grepl("Delaware", colnames(dataset_uninsured_population_2010)))]
 
@@ -518,91 +530,65 @@ View(dataset_uninsured_population_2022)
 
 dataset_uninsured_population_2023 = dataset_uninsured_population_2023[, which(!grepl("Wyoming", colnames(dataset_uninsured_population_2023)))]
 View(dataset_uninsured_population_2023)
+```
 
-###############################################################################
-
+```{r data cleaning taking out metadata, include=FALSE}
 #Now we are cleaning out the unnecessary metadata in the rows
 #this is me cleaning out the rows with unnecessary metadata and keeping household income levels and the total population numbers
 dataset_uninsured_population_2010 <- dataset_uninsured_population_2010[-c(2:104),]
-View(dataset_uninsured_population_2010)
 
 dataset_uninsured_population_2011 <- dataset_uninsured_population_2011[-c(2:104),]
-View(dataset_uninsured_population_2011)
 
 dataset_uninsured_population_2012 <- dataset_uninsured_population_2012[-c(2:104),]
-View(dataset_uninsured_population_2012)
 
 dataset_uninsured_population_2013 <- dataset_uninsured_population_2013[-c(2:104),]
-View(dataset_uninsured_population_2013)
 
 dataset_uninsured_population_2014 <- dataset_uninsured_population_2014[-c(2:104),]
-View(dataset_uninsured_population_2014)
 
 dataset_uninsured_population_2015 <- dataset_uninsured_population_2015[-c(2:104),]
-View(dataset_uninsured_population_2015)
 
 dataset_uninsured_population_2016 <- dataset_uninsured_population_2016[-c(2:104),]
-View(dataset_uninsured_population_2016)
 
 dataset_uninsured_population_2017 <- dataset_uninsured_population_2017[-c(2:104),]
-View(dataset_uninsured_population_2017)
 
 dataset_uninsured_population_2018 <- dataset_uninsured_population_2018[-c(2:104),]
-View(dataset_uninsured_population_2018)
 
 dataset_uninsured_population_2019 <- dataset_uninsured_population_2019[-c(2:104),]
-View(dataset_uninsured_population_2019)
 
 dataset_uninsured_population_2021 <- dataset_uninsured_population_2021[-c(2:104),]
-View(dataset_uninsured_population_2021)
 
 dataset_uninsured_population_2022 <- dataset_uninsured_population_2022[-c(2:104),]
-View(dataset_uninsured_population_2022)
 
 dataset_uninsured_population_2023 <- dataset_uninsured_population_2023[-c(2:104),]
-View(dataset_uninsured_population_2023)
 
 dataset_uninsured_population_2010 <- dataset_uninsured_population_2010[-c(10:17),]
-View(dataset_uninsured_population_2010)
 
 dataset_uninsured_population_2011 <- dataset_uninsured_population_2011[-c(10:17),]
-View(dataset_uninsured_population_2011)
 
 dataset_uninsured_population_2012 <- dataset_uninsured_population_2012[-c(10:17),]
-View(dataset_uninsured_population_2012)
 
 dataset_uninsured_population_2013 <- dataset_uninsured_population_2013[-c(10:17),]
-View(dataset_uninsured_population_2013)
 
 dataset_uninsured_population_2014 <- dataset_uninsured_population_2014[-c(10:17),]
-View(dataset_uninsured_population_2014)
 
 dataset_uninsured_population_2015 <- dataset_uninsured_population_2015[-c(10:17),]
-View(dataset_uninsured_population_2015)
 
 dataset_uninsured_population_2016 <- dataset_uninsured_population_2016[-c(10:17),]
-View(dataset_uninsured_population_2016)
 
 dataset_uninsured_population_2017 <- dataset_uninsured_population_2017[-c(10:17),]
-View(dataset_uninsured_population_2017)
 
 dataset_uninsured_population_2018 <- dataset_uninsured_population_2018[-c(10:17),]
-View(dataset_uninsured_population_2018)
 
 dataset_uninsured_population_2019 <- dataset_uninsured_population_2019[-c(10:17),]
-View(dataset_uninsured_population_2019)
 
 dataset_uninsured_population_2021 <- dataset_uninsured_population_2021[-c(10:17),]
-View(dataset_uninsured_population_2021)
 
 dataset_uninsured_population_2022 <- dataset_uninsured_population_2022[-c(10:17),]
-View(dataset_uninsured_population_2022)
 
 dataset_uninsured_population_2023 <- dataset_uninsured_population_2023[-c(10:17),]
-View(dataset_uninsured_population_2023)
+```
 
-################################################################################
-
+```{r datacleaning storing strings as numeric values, include=FALSE}
 #As the values in these yearly datasets are stored as characters, we are now going to coerce them into numeric values so that we can create a new variable afterwards.
 #The values in the datasets of the uninsured population are stored as characters. Here I am going to get rid of "" so I can store them as numeric.
 
@@ -628,7 +614,7 @@ dataset_uninsured_population_2010_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2010_cleaned)[1] <- colnames(dataset_uninsured_population_2010)[1]
 
-View(dataset_uninsured_population_2010_cleaned)
+
 class(dataset_uninsured_population_2010_cleaned)
 class(dataset_uninsured_population_2010_cleaned[[2]])
 
@@ -653,7 +639,7 @@ dataset_uninsured_population_2011_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2011_cleaned)[1] <- colnames(dataset_uninsured_population_2011)[1]
 
-View(dataset_uninsured_population_2011_cleaned)
+
 class(dataset_uninsured_population_2011_cleaned)
 class(dataset_uninsured_population_2011_cleaned[[2]])
 
@@ -676,7 +662,7 @@ dataset_uninsured_population_2012_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2012_cleaned)[1] <- colnames(dataset_uninsured_population_2012)[1]
 
-View(dataset_uninsured_population_2012_cleaned)
+
 class(dataset_uninsured_population_2012_cleaned)
 class(dataset_uninsured_population_2012_cleaned[[2]])
 
@@ -698,7 +684,7 @@ dataset_uninsured_population_2013_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2013_cleaned)[1] <- colnames(dataset_uninsured_population_2013)[1]
 
-View(dataset_uninsured_population_2013_cleaned)
+
 class(dataset_uninsured_population_2013_cleaned)
 class(dataset_uninsured_population_2013_cleaned[[2]])
 
@@ -720,7 +706,7 @@ dataset_uninsured_population_2014_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2014_cleaned)[1] <- colnames(dataset_uninsured_population_2014)[1]
 
-View(dataset_uninsured_population_2014_cleaned)
+
 class(dataset_uninsured_population_2014_cleaned)
 class(dataset_uninsured_population_2014_cleaned[[2]])
 
@@ -743,7 +729,6 @@ dataset_uninsured_population_2015_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2015_cleaned)[1] <- colnames(dataset_uninsured_population_2015)[1]
 
-View(dataset_uninsured_population_2015_cleaned)
 class(dataset_uninsured_population_2015_cleaned)
 class(dataset_uninsured_population_2015_cleaned[[2]])
 
@@ -765,7 +750,6 @@ dataset_uninsured_population_2016_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2016_cleaned)[1] <- colnames(dataset_uninsured_population_2016)[1]
 
-View(dataset_uninsured_population_2016_cleaned)
 class(dataset_uninsured_population_2016_cleaned)
 class(dataset_uninsured_population_2016_cleaned[[2]])
 
@@ -788,7 +772,7 @@ dataset_uninsured_population_2017_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2017_cleaned)[1] <- colnames(dataset_uninsured_population_2017)[1]
 
-View(dataset_uninsured_population_2017_cleaned)
+
 class(dataset_uninsured_population_2017_cleaned)
 class(dataset_uninsured_population_2017_cleaned[[2]])
 
@@ -811,7 +795,7 @@ dataset_uninsured_population_2018_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2018_cleaned)[1] <- colnames(dataset_uninsured_population_2018)[1]
 
-View(dataset_uninsured_population_2018_cleaned)
+
 class(dataset_uninsured_population_2018_cleaned)
 class(dataset_uninsured_population_2018_cleaned[[2]])
 
@@ -834,7 +818,6 @@ dataset_uninsured_population_2019_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2019_cleaned)[1] <- colnames(dataset_uninsured_population_2019)[1]
 
-View(dataset_uninsured_population_2019_cleaned)
 class(dataset_uninsured_population_2019_cleaned)
 class(dataset_uninsured_population_2019_cleaned[[2]])
 
@@ -856,7 +839,7 @@ dataset_uninsured_population_2021_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2021_cleaned)[1] <- colnames(dataset_uninsured_population_2021)[1]
 
-View(dataset_uninsured_population_2021_cleaned)
+
 class(dataset_uninsured_population_2021_cleaned)
 class(dataset_uninsured_population_2021_cleaned[[2]])
 
@@ -879,7 +862,6 @@ dataset_uninsured_population_2022_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2022_cleaned)[1] <- colnames(dataset_uninsured_population_2022)[1]
 
-View(dataset_uninsured_population_2022_cleaned)
 class(dataset_uninsured_population_2022_cleaned)
 class(dataset_uninsured_population_2022_cleaned[[2]])
 
@@ -902,11 +884,13 @@ dataset_uninsured_population_2023_cleaned <- cbind(first_col, dataset_uninsured_
 #rename the first column
 colnames(dataset_uninsured_population_2023_cleaned)[1] <- colnames(dataset_uninsured_population_2023)[1]
 
-View(dataset_uninsured_population_2023_cleaned)
 class(dataset_uninsured_population_2023_cleaned)
 class(dataset_uninsured_population_2023_cleaned[[2]])
 
-################################################################################
+```
+
+```{r new variable uninsured share, include=FALSE}
+
 
 #Now that the values in the yearly datasets are stored as numeric values but the first column as the first column contains the names of the states, we can now create are first new variable, which is the uninsured share:
 
@@ -1678,9 +1662,9 @@ share_cols <- grep("\\.\\.Uninsured\\.Share$", names(df_pop_2023), value = TRUE)
 cat("\n✅ Created columns:\n")
 print(share_cols)
 print(df_pop_2023[1, share_cols])
+```
 
-################################################################################
-
+```{r merging yearly datasets, include=FALSE}
 #Now we have the new variable in the seperate datasets and now we are going to merge these yearly datasets into 1 dataset
 
 # Define years
@@ -1788,6 +1772,7 @@ all_states_100 = all_states %>%
 library(dplyr)
 all_states_100 = all_states_100 %>%
   rename(income_group = `Label (Grouping)`)
+
 ```
 
 ## Data cleaning: Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
@@ -1796,9 +1781,7 @@ For the economic data from the Bureau of Economic Analysis, we used the SAGDP1 �
 
 From this cleaned table, we created a new variable: annual real GDP growth, calculated for each state and year by measuring the year-over-year percentage change in real GDP. This variable captures how rapidly each state's economy was expanding or contracting over time. Including GDP growth adds important economic context to our analysis, allowing us to explore whether changes in economic performance relate to shifts in health insurance coverage. We can examine whether periods of economic expansion correspond with improvements in coverage rates, providing a more comprehensive understanding of how economic conditions may influence healthcare access.
 
-```{r include=FALSE}
-#Here I am making a new variable which is the GDP growth rate of the states
-
+```{r cleaning data from years and states not included in our main dataset of the uninsured population }
 #renaming the table
 table_GDP = annual_gdp_Table_4_
 
@@ -1809,6 +1792,11 @@ table_GDP = annual_gdp_Table_4_[, !(names(annual_gdp_Table_4_) %in% c("1997", "1
 table_GDP = table_GDP[-c(9,10,13,36,41,47,52,54,55,56,57,58,59,60),]
 table_GDP = table_GDP[-c(1),]
 table_GDP = table_GDP[-c(45),]
+
+```
+
+```{r new variable gdp growth, include=FALSE}
+#Here I am making a new variable which is the GDP growth rate of the states
 
 #class coercion of double to numeric of all columns but the first column
 table_GDP[, -1] = lapply(table_GDP[, -1], as.numeric)
@@ -1837,7 +1825,6 @@ gdp_growth <- gdp_long %>%
   arrange(year) %>%
   mutate(growth_rate = (gdp - lag(gdp)) / lag(gdp) * 100)
 
-View(gdp_growth)
 
 #delete rows from 2009
 gdp_growth = gdp_growth[-c(1:45), ]
@@ -1851,7 +1838,7 @@ gdp_growth = gdp_growth[-c(1:45), ]
 
 To examine the spatial distribution of uninsured populations across the United States, we mapped the geographic variation using American Community Survey (ACS) one-year estimates for available states. Initially, we created a subset of the comprehensive all_states_100 data set, focusing specifically on 2023 data to ensure temporal consistency. Subsequently, we generated separate visualizations for Alaska due to its substantial geographic scale, which would otherwise compromise the readability and detail of the continental United States map when displayed at the same resolution.
 
-```{r visualize spatial, echo = FALSE, fig.cap = "", out.width= "90%"}
+```{r visualize spatial, echo = FALSE, out.width= "85%"}
 #Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data
 
 spatial_df = all_states %>%
@@ -1863,6 +1850,7 @@ spatial_df = spatial_df[-c(45:396),]
 
 #Here I am trying to plot the spatial subset
 
+#Here I am plotting the rest of the US without Alaska
 #getting the US map
 us_map = map_data("state")
 
@@ -1881,14 +1869,7 @@ ggplot(us_map, aes(x = long, y = lat, group = group, fill = value)) +
   labs(fill = "(%) Share of Uninsured Population") + 
   theme_void() 
 
-```
-
-```{r alaska, echo = FALSE, fig.cap = ""}
-
-#I still need the state Alaska but the package maps does not include the state Alaska
-
-# I am trying it here again including Alaska with another package
-
+##Here I am plotting Alaska
 library(rnaturalearth)
 library(ggplot2)
 library(dplyr)
@@ -1911,9 +1892,15 @@ ggplot(alaska_data) +
   theme_void() + 
   scale_fill_gradient( low = "lightblue", high = "red", na.value = "white")+
   theme(legend.position = "none")
+
+
 ```
 
-```{r visualization temporal, echo = FALSE, fig.cap = ""}
+**Temporal Variation Visualization, Texas's Share of Uninsured Population and Texas's GDP growth rate over time**
+
+As we can see in the graph above, Texas emerged as a notable outlier in our spatial variation analysis, prompting us to conduct a more comprehensive temporal examination of the state's uninsured population dynamics. Consequently, we analyzed Texas's proportion of uninsured residents across a thirteen-year period from 2010 to 2023, excluding 2020 data due to potential pandemic-related anomalies. Furthermore, we sought to investigate whether economic growth served as a contributing factor in explaining the observed patterns in insurance coverage rates throughout this time frame.
+
+```{r visualization temporal, echo = FALSE, out.width= "80%"}
 #Here I am making a sub dataframe for the temporal visualization with the GDP growth rate of Texas and another subset of the share of uninsured population in the US over the years
 
 #subset Texas share of uninsured population
@@ -1980,18 +1967,13 @@ ggplot() +
   scale_x_continuous(breaks = c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022,2023)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-
 ```
-
-**Temporal Variation Visualization, Texas's Share of Uninsured Population and Texas's GDP growth rate over time**
-
-Texas emerged as a notable outlier in our spatial variation analysis, prompting us to conduct a more comprehensive temporal examination of the state's uninsured population dynamics. Consequently, we analyzed Texas's proportion of uninsured residents across a thirteen-year period from 2010 to 2023, excluding 2020 data due to potential pandemic-related anomalies. Furthermore, we sought to investigate whether economic growth served as a contributing factor in explaining the observed patterns in insurance coverage rates throughout this time frame.
 
 **Sub-Group Variation Visualization, The Uninsured Rates of the Middle-Income Group in 2017 in the U.S.**
 
 Building upon findings from the Kaiser Family Foundation (2024), which established that uninsured individuals in the United States are disproportionately represented among low-income populations, we sought to examine the insurance coverage status of middle-income groups who often find themselves in a precarious position. Specifically, this demographic typically earns insufficient income to afford private insurance yet exceeds the eligibility thresholds for Medicaid assistance. Moreover, we selected 2017 as our focal year, representing the first full year following President Trump's inauguration in 2016, thereby capturing potential early policy implications on this vulnerable middle-income segment.
 
-```{r visualization subgroup, echo = FALSE}
+```{r visualization subgroup, echo = FALSE, out.width= "80%"}
 #create a subset of data 2017 for total unsinred share in the states
 
 library(dplyr)
@@ -2040,7 +2022,7 @@ ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) +
 
 In 2018, Arkansas became the first state to implement work requirements for Medicaid recipients as part of its Arkansas Works program, mandating that able-bodied adults aged 19-49 demonstrate at least 80 hours of monthly employment, education, or training activities to maintain their Medicaid eligibility. This policy initiative was designed to encourage workforce participation and reduce dependency on government assistance programs. To evaluate the causal impact of this intervention, we employed a comparative analysis framework where Arkansas serves as the treatment group, while the remaining 43 states with available data constitute the control group. Subsequently, we examined whether the implementation of work requirements produced statistically significant changes in Arkansas's uninsured rates relative to the weighted average change observed across the control states, thereby isolating the policy's specific effects from broader national trends in insurance coverage.
 
-```{r visualization event, echo = FALSE, fig.cap = ""}
+```{r visualization event, echo = FALSE, out.width= "80%"}
 #Here I am making a sub dataframe for the event analysis of the implementation of stricter conditions for Medicaid in 2018 in Arkansas
 
 #sub dataframe Arkansas share uninsured for all the years

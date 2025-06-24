@@ -1898,7 +1898,6 @@ ggplot(alaska_data) +
   scale_fill_gradient( low = "lightblue", high = "red", na.value = "white")+
   theme(legend.position = "none")
 
-
 ```
 
 **Temporal Variation Visualization, Texas's Share of Uninsured Population and Texas's GDP growth rate over time**

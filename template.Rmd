@@ -48,43 +48,43 @@ library(rnaturalearthhires)
 
 ## 1.1 Describe the Social Problem
 
-The large number of uninsured people in the United States represents a significant social issue with serious consequences for individuals and the healthcare system. As of 2022, over 27 million Americans—approximately one in twelve people—lacked health insurance coverage (KFF, 2023). This lack of coverage creates substantial barriers to healthcare access and has wide-ranging effects on both personal and public health.
+The substantial number of uninsured people in the United States represents a significant public health challenge with serious implications for individuals and the healthcare system. Current data shows that over 27 million Americans, approximately one in twelve people, lack health insurance coverage as of 2022 (KFF, 2023). This coverage gap creates considerable barriers to healthcare access and produces widespread effects on both individual and population health outcomes.
 
-For individuals without insurance, the consequences are often severe. Uninsured people are much more likely to delay or avoid necessary medical care due to cost concerns, which leads to worse health outcomes, preventable emergency room visits, and higher rates of preventable deaths. The financial impact is equally serious, as uninsured individuals must pay full price for medical services, often resulting in medical debt, damaged credit, and long-term financial hardship (Davis, 2007).
+For uninsured individuals, the consequences are particularly severe. Research indicates that people without insurance are significantly more likely to postpone or forgo necessary medical care due to cost concerns, leading to poorer health outcomes, increased emergency department utilization for preventable conditions, and higher mortality rates from treatable diseases. The economic burden is equally substantial, as uninsured individuals face full payment responsibility for medical services, frequently resulting in medical debt, compromised credit status, and prolonged financial hardship (Davis, 2007).
 
-The problem extends beyond individual impacts to affect the entire healthcare system. When uninsured patients cannot pay for their care, hospitals and clinics must absorb these costs as uncompensated care. This financial burden strains healthcare providers and ultimately increases costs for everyone else through higher insurance premiums and taxes. As Davis (2007) explains, the uninsured population includes "our neighbors, co-workers, and family members," making this a community-wide issue that affects society as a whole.
+The impact extends beyond individual consequences to affect the broader healthcare system. When uninsured patients cannot meet their payment obligations, healthcare institutions must absorb these costs as uncompensated care. This financial burden creates strain on healthcare providers and contributes to cost increases that ultimately affect insured populations through higher premiums and increased public spending. Davis (2007) emphasizes that the uninsured population includes "our neighbors, co-workers, and family members," demonstrating how this issue affects entire communities and has implications for society as a whole.
 
 ## 1.2 Provide Background on the Problem
 
-The Affordable Care Act (ACA), enacted in 2010, significantly expanded health insurance coverage through Medicaid expansion and subsidized insurance marketplaces. However, millions of Americans remain uninsured despite these reforms. According to the Kaiser Family Foundation, most uninsured individuals today are low-income workers, disproportionately people of color, and residents of states that chose not to expand Medicaid under the ACA (KFF, 2023).
+The Affordable Care Act (ACA), implemented in 2010, substantially expanded health insurance coverage through Medicaid expansion and subsidized insurance marketplaces. Nevertheless, millions of Americans continue to lack insurance coverage despite these policy reforms. According to the Kaiser Family Foundation, the majority of uninsured individuals today are low-income workers, with disproportionate representation among communities of color and residents of states that declined to expand Medicaid under the ACA (KFF, 2023).
 
-A major factor contributing to this problem is the employment-based nature of the U.S. health insurance system. Many uninsured individuals work in jobs that do not offer health benefits, including part-time, temporary, or service sector positions. These workers often earn too much to qualify for traditional Medicaid but too little to afford private insurance, creating what Davis (2007) describes as falling "through the cracks" of the current system.
+A primary contributing factor to persistent uninsurance is the employment-based structure of the U.S. health insurance system. Many uninsured individuals are employed in positions that do not provide health benefits, including part-time, temporary, or service sector roles. These workers frequently earn incomes that exceed traditional Medicaid eligibility thresholds while remaining insufficient to afford private insurance premiums, creating what Davis (2007) characterizes as falling "through the cracks" of the existing system.
 
-Geographic disparities also play a significant role. States that expanded Medicaid under the ACA have substantially lower uninsured rates than non-expansion states, creating uneven access to coverage across the country. This policy variation has resulted in particularly high uninsured rates in many Southern and some Western states.
+Geographic variation in coverage also contributes significantly to uninsurance patterns. States that implemented Medicaid expansion under the ACA demonstrate considerably lower uninsured rates compared to non-expansion states, resulting in unequal access to coverage nationwide. This policy divergence has produced particularly elevated uninsured rates in numerous Southern and certain Western states.
 
-The persistence of uninsurance reflects broader structural challenges in American healthcare, including affordability, accessibility, and policy gaps that leave vulnerable populations without coverage options.
+The continued prevalence of uninsurance reflects fundamental structural limitations within American healthcare policy, including affordability constraints, accessibility barriers, and coverage gaps that leave vulnerable populations without viable insurance options.
 
 # Part 2 – Describe and Acquire Data
 
 ## 2.1 Describe the Data sets
 
-This analysis utilizes two primary datasets to examine patterns in health insurance coverage and their relationship to economic conditions across U.S. states.
+This analysis employs two primary datasets to examine health insurance coverage patterns and their relationship to economic conditions across U.S. states.
 
-**U.S. Census Bureau Data** The main data set comes from the U.S. Census Bureau's American Community Survey (ACS) 1-Year Estimates, specifically the table "Selected Characteristics of the Uninsured in the United States." This data set covers the period from 2010 to 2023, excluding 2020 due to the absence of 1-year estimates for that year.
+**U.S. Census Bureau Data** The principal dataset derives from the U.S. Census Bureau's American Community Survey (ACS) 1-Year Estimates, specifically the table "Selected Characteristics of the Uninsured in the United States." This dataset encompasses the period from 2010 to 2023, with 2020 excluded due to the unavailability of 1-year estimates for that year.
 
-Eight smaller states and territories were excluded from the analysis—Delaware, District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming—because they are not consistently included in the 1-year estimates. The 1-year estimates were chosen over 5-year estimates because they provide more timely data that can capture short-term changes from economic shifts or policy reforms.
+Eight smaller states and territories were excluded from the analysis: Delaware, District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming, as they are not consistently represented in the 1-year estimates. The 1-year estimates were selected over 5-year estimates because they provide more current data capable of capturing short-term variations resulting from economic fluctuations or policy modifications.
 
-The ACS data set provides state-level information on the civilian non-institutionalized population, including total population counts, number of uninsured individuals, and various demographic and socioeconomic characteristics. For this analysis, we focused on total population figures and household income data (adjusted for inflation) to calculate uninsured rates and understand the economic context.
+The ACS dataset provides state-level information on the civilian non-institutionalized population, including total population counts, numbers of uninsured individuals, and various demographic and socioeconomic characteristics. This analysis focused on total population figures and household income data (inflation-adjusted) to calculate uninsured rates and assess the economic context.
 
-**Bureau of Economic Analysis Data** Economic data comes from the Bureau of Economic Analysis (BEA) table SAGDP1 – State Annual Gross Domestic Product Summary. This data set provides real GDP figures in millions of chained 2017 dollars for each state from 1997 through 2024. Using inflation-adjusted GDP enables consistent comparisons over time and across different states.
+**Bureau of Economic Analysis Data** Economic data originates from the Bureau of Economic Analysis (BEA) table SAGDP1 – State Annual Gross Domestic Product Summary. This dataset provides real GDP figures in millions of chained 2017 dollars for each state from 1997 through 2024. The use of inflation-adjusted GDP facilitates consistent comparisons across time periods and between different states.
 
-**Data Integration** These two datasets together provide a comprehensive view of how health insurance coverage has changed across the United States over time and how coverage patterns may relate to state-level economic conditions. The combination allows for analysis of both temporal trends and cross-state variations in uninsured rates.
+**Data Integration** These two datasets collectively provide a comprehensive perspective on how health insurance coverage has evolved across the United States over time and how coverage patterns may correlate with state-level economic conditions. This combination enables analysis of both temporal trends and interstate variation in uninsured rates.
 
 ## 2.2 Import and Prepare the Data set
 
 **First data set:** **"Selected Characteristics of The Uninsured in the U.S."**
 
--   Here we imported the first data set from the U.S. Census Bureau and named them "dataset_uninsured_population\_*year"* from 2010-2023, excl 2020.
+Here we imported the first data set from the U.S. Census Bureau and named them "data set_uninsured_population\_*year"* from 2010-2023, excl 2020.
 
 ```{r import-data, include=FALSE}
 # The first dataset is from the dataset "selected characteristics of the uninsured in the US from 2010-2023, exclduing 2020 from the US Census Bureau. These are the ACS one-year estimates.
@@ -145,7 +145,7 @@ dataset_uninsured_population_2023 = read_csv("data insured population 2010-2023/
 
 **Second Data set: "SAGDP1 State Annual Gross Domestic Product Summary", Statistic: "Real GDP (millions of chained 2017 dollars)"**
 
--   Here we imported the second data set from the Bureau of Economic Analysis of the annual GDP of the states from 2009-2023 and named it "table_GDP"
+Here we imported the second data set from the Bureau of Economic Analysis of the annual GDP of the states from 2009-2023 and named it "table_GDP"
 
 ```{r import second dataset, figure.show="asis", include=F}
 #The second dataset is from the Bureau of Economic Analysis and is the annual real GDP of the 44 states we include in our analysis from the year 2009-2023, excluding 2020
@@ -157,17 +157,15 @@ table_GDP = annual_gdp_Table_4_
 
 ## Data cleaning: Data sets of Uninsured Population and The Creation of The New Variable: The Uninsured Share
 
-To prepare the data for analysis, we began by removing all margins of error from the original Census data sets. While margins of error are important for assessing statistical precision, they were not necessary for our purposes, which focused on comparing overall trends in health insurance coverage across states and years. Removing them helped simplify the data set and reduce complexity without compromising our analytic goals.
+To prepare the data for analysis, we removed all margins of error from the original Census datasets. While margins of error are important for assessing statistical precision, they were unnecessary for our analysis, which focused on comparing overall trends in health insurance coverage across states and years. Removing them simplified the dataset without compromising our analytical objectives.
 
-A more structural challenge involved the inclusion of smaller states and territories. Since 2016, the Census Bureau’s 1-year estimates no longer cover certain low-population areas, meaning they are missing from some years in our timespan. To ensure consistency across time, we decided to exclude eight such places entirely from our analysis. These were Delaware, the District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming. By removing them, we ensured that our data set included only states that were present in every applicable year from 2010 to 2023 (with the exception of 2020, when no data was published due to the COVID-19 pandemic).
+A structural challenge involved the inclusion of smaller states and territories. Since 2016, the Census Bureau's 1-year estimates no longer cover certain low-population areas, creating gaps in our time series. To ensure consistency, we excluded eight jurisdictions entirely: Delaware, the District of Columbia, Hawaii, Puerto Rico, North Dakota, Rhode Island, Vermont, and Wyoming. This approach ensured our dataset included only states present in every applicable year from 2010 to 2023, excluding 2020 when no data was published due to the COVID-19 pandemic.
 
-After resolving issues of consistency and coverage, we turned our attention to the structure of the data itself. Each annual data set included a wide range of metadata—demographic and socioeconomic characteristics that, while valuable for other types of research, were not essential to our primary analysis of insurance coverage trends. We removed variables related to age, sex, race and Hispanic or Latino origin, nativity and U.S. citizenship status, disability status, residence one year ago, educational attainment, employment status, work experience, civilian non-institutionalized workers aged 16 and over, earnings in the past 12 months, and the ratio of income to the poverty level in the past 12 months. From all this, we retained only the total civilian non-institutionalized population and household income (adjusted for inflation), which were directly relevant to our questions about insurance and economic context.
+We then addressed the structure of the data itself. Each annual dataset contained extensive metadata including demographic and socioeconomic characteristics that, while valuable for other research, were not essential to our primary analysis. We removed variables related to age, sex, race and ethnicity, citizenship status, disability status, residence, educational attainment, employment status, work experience, earnings, and poverty ratios. We retained only the total civilian non-institutionalized population and household income data (inflation-adjusted), which were directly relevant to our research questions about insurance coverage and economic context.
 
-To ensure the data was ready for calculations, we then converted all numeric values that had been stored as character strings—often due to formatting like commas—into actual numeric variables. This was a necessary step for performing any reliable mathematical operations.
+We converted all numeric values stored as character strings into actual numeric variables to enable mathematical operations. Most importantly, we created a new variable: uninsured share. Using the total population and total uninsured individuals for each state and year, we calculated the uninsured share by dividing uninsured individuals by total population and multiplying by 100. This percentage reflects the proportion of each state's population without health insurance, enabling easier comparisons across time and states regardless of population differences.
 
-One of the most important transformations in our cleaning process was the creation of a new variable: uninsured share. The original data provided the total population and the total number of uninsured individuals for each state and year. To make this more interpretable and comparable, we calculated the uninsured share by dividing the number of uninsured people by the total population and multiplying the result by 100. This gave us a percentage that reflects the proportion of each state’s population without health insurance. Expressing the data this way allows for easier comparisons across time and across states, regardless of differences in population size. It helps illuminate broader patterns in insurance coverage that would be difficult to spot using absolute numbers alone.
-
-After all these cleaning and transformation steps, we combined the individual yearly data sets into a single, comprehensive data set covering the period from 2010 to 2023 (excluding 2020). This final merged file allowed us to analyze long-term trends and relationships in a consistent and structured way.
+After these cleaning and transformation steps, we combined the individual yearly datasets into a single comprehensive dataset covering 2010 to 2023, excluding 2020. This merged file enabled analysis of long-term trends and relationships in a consistent manner.
 
 ```{r datacleaning of the yearly datasets Uninsured Population 2010,2023, include=FALSE}
 # This is me cleaning out the data insured population from 2010-2016 getting out the margin of error
@@ -1784,9 +1782,9 @@ all_states_100 = all_states_100 %>%
 
 ## Data cleaning: Annual GDP Table and The Creation of The New Variable: Annual Real GDP Growth per year and state
 
-For the economic data from the Bureau of Economic Analysis, we worked with the *SAGDP1 – State Annual Gross Domestic Product Summary* table, which reports real GDP per state in millions of chained 2017 dollars. Before analysis, we cleaned this data set to align it with the structure and timeframe of our health insurance data. First, we removed all columns corresponding to years outside our scope—specifically, 1997 through 2008, as well as 2020 and 2024. We also filtered out states and regions that were not included in our main data set or that represented aggregate regions rather than individual states. Specifically, we excluded Delaware, District of Columbia, Hawaii, North Dakota, Puerto Rico, Vermont, Wyoming, and Rhode Island, as well as the regional aggregates: New England, Mideast, Great Lakes, Plains, Southeast, Southwest, Rocky Mountain, and Far West. Also here, the values were stored as "double", so we coerced the values to numeric, so that we are able to compute our new variable. After these adjustments, we renamed the cleaned data set `table_GDP` for use in our analysis.
+For the economic data from the Bureau of Economic Analysis, we used the SAGDP1 – State Annual Gross Domestic Product Summary table, which reports real GDP per state in millions of chained 2017 dollars. We cleaned this dataset to align with our health insurance data by removing columns for years outside our scope (1997 through 2008, plus 2020 and 2024) and filtering out states not included in our main dataset. We excluded Delaware, District of Columbia, Hawaii, North Dakota, Puerto Rico, Vermont, Wyoming, and Rhode Island, as well as regional aggregates such as New England, Mideast, Great Lakes, Plains, Southeast, Southwest, Rocky Mountain, and Far West. We converted the stored values to numeric format and renamed the cleaned dataset `table_GDP`.
 
-From this cleaned table, we created a new variable: annual real GDP growth, calculated for each state and year by measuring the year-over-year percentage change in real GDP. This variable allowed us to capture how quickly or slowly each state’s economy was growing over time. Including GDP growth in our analysis adds important context: it helps us explore whether changes in economic performance are linked to shifts in health insurance coverage. For example, we can examine whether periods of economic expansion correspond with improvements in coverage rates. By combining this with our uninsurance data, we gain a more nuanced understanding of how economic conditions may influence access to healthcare.
+From this cleaned table, we created a new variable: annual real GDP growth, calculated for each state and year by measuring the year-over-year percentage change in real GDP. This variable captures how rapidly each state's economy was expanding or contracting over time. Including GDP growth adds important economic context to our analysis, allowing us to explore whether changes in economic performance relate to shifts in health insurance coverage. We can examine whether periods of economic expansion correspond with improvements in coverage rates, providing a more comprehensive understanding of how economic conditions may influence healthcare access.
 
 ```{r include=FALSE}
 #Here I am making a new variable which is the GDP growth rate of the states
@@ -1841,7 +1839,7 @@ gdp_growth = gdp_growth[-c(1:45), ]
 
 **Spatial Variation Visualization, U.S. Share of The Uninsured Population in 2023**
 
--   describe here that we mapped here the spatial variation of the uninsured population of the states of which we have the ACS one year estimates of and that we first created a subset of 2023 of the big dataset all_states_100 and that we plotted Alaska separately otherwise the whole map would be too small to visualize.
+To examine the spatial distribution of uninsured populations across the United States, we mapped the geographic variation using American Community Survey (ACS) one-year estimates for available states. Initially, we created a subset of the comprehensive all_states_100 data set, focusing specifically on 2023 data to ensure temporal consistency. Subsequently, we generated separate visualizations for Alaska due to its substantial geographic scale, which would otherwise compromise the readability and detail of the continental United States map when displayed at the same resolution.
 
 ```{r visualize spatial, echo = FALSE, fig.cap = ""}
 #Here I am making a sub dataframe for the spatial visualization of 2023 of all the states with available data
@@ -1899,11 +1897,13 @@ ggplot(alaska_data) +
   theme_void() + 
   scale_fill_gradient( low = "lightblue", high = "red", na.value = "white")+
   theme(legend.position = "none")
+
+
 ```
 
 **Temporal Variation Visualization, Texas's Share of Uninsured Population and Texas's GDP growth rate over time**
 
--   describe that Texas stood out in our spatial variation analysis and that we wanted to dig deeper into Texas's share of uninsured population over time from 2010 until 2023, except for 2020 and that we wanted to see if economic growth played a role in this.
+Texas emerged as a notable outlier in our spatial variation analysis, prompting us to conduct a more comprehensive temporal examination of the state's uninsured population dynamics. Consequently, we analyzed Texas's proportion of uninsured residents across a thirteen-year period from 2010 to 2023, excluding 2020 data due to potential pandemic-related anomalies. Furthermore, we sought to investigate whether economic growth served as a contributing factor in explaining the observed patterns in insurance coverage rates throughout this time frame.
 
 ```{r visualization temporal, echo = FALSE, fig.cap = ""}
 #Here I am making a sub dataframe for the temporal visualization with the GDP growth rate of Texas and another subset of the share of uninsured population in the US over the years
@@ -1977,7 +1977,7 @@ ggplot() +
 
 **Sub-Group Variation Visualization, The Uninsured Rates of the Middle-Income Group in 2017 in the U.S.**
 
--   describe that already the KFF (2024) found that the uninsured people in the US are more likely to be low income and that we were wondering what the state of the middle-income group is as they earn too much for Medicaid but not enough for private insurance. 2017 is the year after Trump became president in 2016.
+Building upon findings from the Kaiser Family Foundation (2024), which established that uninsured individuals in the United States are disproportionately represented among low-income populations, we sought to examine the insurance coverage status of middle-income groups who often find themselves in a precarious position. Specifically, this demographic typically earns insufficient income to afford private insurance yet exceeds the eligibility thresholds for Medicaid assistance. Moreover, we selected 2017 as our focal year, representing the first full year following President Trump's inauguration in 2016, thereby capturing potential early policy implications on this vulnerable middle-income segment.
 
 ```{r visualization subgroup, echo = FALSE}
 #create a subset of data 2017 for total unsinred share in the states
@@ -2021,12 +2021,12 @@ library(ggplot2)
 ggplot(boxplot_data, aes(x = factor(quartile), y = value.x)) + 
   geom_boxplot()+
   labs(x = "Quartiles in Proportion State Population, making $25k to $49,999", y = "Percentages Point Total Uninsured U.S.", title = "Uninsured Share among Middle-Income in the US, 2017") + 
-  theme_classic()
+  theme_classic() + scale_y_continuous(breaks = seq(0,20, by = 5), limits = c(0,20))
 ```
 
 **Event Analysis Visualization, The Impact of The Implementation of Work Requirements for Medicaid in Arkansas, 2018**
 
--   describe here what happened in Arkansas in 2018 and why the wanted to implement the work requirements and what these requirements were. and that Arkansas is the treatment group and the other 43 states are the control group and the ware analysing if the implementation had significant impact on the uninsured rates compared to the change in the control group which is the weighted average of the uninsured rates.
+In 2018, Arkansas became the first state to implement work requirements for Medicaid recipients as part of its Arkansas Works program, mandating that able-bodied adults aged 19-49 demonstrate at least 80 hours of monthly employment, education, or training activities to maintain their Medicaid eligibility. This policy initiative was designed to encourage workforce participation and reduce dependency on government assistance programs. To evaluate the causal impact of this intervention, we employed a comparative analysis framework where Arkansas serves as the treatment group, while the remaining 43 states with available data constitute the control group. Subsequently, we examined whether the implementation of work requirements produced statistically significant changes in Arkansas's uninsured rates relative to the weighted average change observed across the control states, thereby isolating the policy's specific effects from broader national trends in insurance coverage.
 
 ```{r visualization event, echo = FALSE, fig.cap = ""}
 #Here I am making a sub dataframe for the event analysis of the implementation of stricter conditions for Medicaid in 2018 in Arkansas
@@ -2093,35 +2093,29 @@ ggplot() + geom_line(data = weighted_avg_2, aes(x = year, y = weighted_avg, colo
 
 **Spatial Variation Visualization, U.S. Share of The Uninsured Population in 2023**
 
-The spatial distribution of uninsured rates across the U.S. in 2023 reveals a stark regional divide. States in the South, especially Texas and Florida, report the highest uninsured shares. In contrast, Northeastern and Upper Midwestern states show much lower rates, likely due to more expansive Medicaid programs, higher employer-based coverage, and more generous state-level health initiatives (Bailey et al., 2017).
+The spatial distribution of uninsured rates across the U.S. in 2023 reveals a pronounced regional divide. Southern states, particularly Texas and Florida, report the highest uninsured shares. In contrast, Northeastern and Upper Midwestern states demonstrate substantially lower rates, likely attributable to more expansive Medicaid programs, higher employer-based coverage, and more generous state-level health initiatives (Bailey et al., 2017).
 
-More nuanced is the case of Western states like Nevada and Arizona, which also exhibit elevated uninsured rates despite having relatively progressive policy environments. This may reflect labor market characteristics—such as a higher prevalence of gig work, part-time jobs, and self-employment—which are often associated with lower access to employer-sponsored insurance (Collins et al., 2020). Furthermore, undocumented immigrant populations, more common in some Western and Southern states, are often excluded from public coverage (KFF, 2023), further contributing to uninsured rates.
+Western states like Nevada and Arizona present a more complex pattern, exhibiting elevated uninsured rates despite relatively progressive policy environments. This may reflect distinct labor market characteristics, including higher prevalence of gig work, part-time employment, and self-employment, which are associated with reduced access to employer-sponsored insurance (Collins et al., 2020). .
 
-The findings support existing literature showing that health coverage in the U.S. is not solely driven by state policy, but is deeply intertwined with employment structures, income levels, and demographic profiles (Davis, 2007; Sommers et al., 2012). Thus, even among states with similar political leanings, uninsured rates can diverge significantly based on labor and population dynamics.
+These findings support existing literature demonstrating that health coverage in the U.S. is not solely determined by state policy, but is fundamentally linked to employment structures, income levels, and demographic characteristics (Davis, 2007; Sommers et al., 2012). Consequently, even among states with similar political orientations, uninsured rates can vary significantly based on labor market and population dynamics.
 
 **Temporal Variation Visualization, Texas's Share of Uninsured Population and Texas's GDP growth rate over time**
 
-The line graph illustrates the relationship between GDP growth rate and the uninsured share in Texas from 2010 to 2023 (excluding 2020).
+The line graph illustrates the relationship between GDP growth rate and uninsured share in Texas from 2010 to 2023, excluding 2020. We observe a clear downward trend in the uninsured share, declining from approximately 23% to 17% over this period. However, despite economic fluctuations, particularly a GDP growth decline around 2016 and a spike in between 2017 and 2018, the uninsured rate remained relatively high and stable, especially after 2016.
 
-We observe a clear downward trend in the uninsured share, falling from about 23% to 17% over this period. However, despite economic fluctuations—particularly a dip in GDP growth around 2016 and a spike in 2023—the uninsured rate remained relatively high and stable, especially after 2016.
-
-This pattern suggests that economic growth alone doesn't guarantee increased health insurance coverage. Even in years with strong GDP growth, Texas continued to have one of the highest uninsured rates in the country. A likely explanation is Texas’s decision not to expand Medicaid under the ACA, which left many low-income adults without affordable coverage options (KFF, 2023; Davis, 2007). In other words, policy choices, not just economic performance, shape access to insurance.
+This pattern suggests that economic growth alone does not ensure increased health insurance coverage. Even during years with strong GDP growth, Texas maintained one of the highest uninsured rates nationally. A likely explanation is Texas's decision not to expand Medicaid under the ACA, leaving many low-income adults without affordable coverage options (KFF, 2023; Davis, 2007). Policy choices, rather than solely economic performance, fundamentally shape insurance access.
 
 **Sub-Group Variation Visualization, The Uninsured Rates of the Middle-Income Group in 2017 in the U.S.**
 
-The boxplot shows the total uninsured share per U.S. state in 2023, grouped by quartiles of the proportion of middle-income earners (those earning \$25,000–\$49,999). Importantly, the y-axis reflects the overall uninsured rate, not just for middle-income individuals.
+The box plot displays total uninsured share per U.S. state in 2023, grouped by quartiles of middle-income earners (those earning \$25,000–\$49,999). The y-axis reflects overall uninsured rates, not exclusively middle-income individuals. The second and third quartiles demonstrate nearly identical median uninsured rates, suggesting that higher proportions of middle-income residents do not clearly relate to higher or lower uninsured shares.
 
-We observe that the second and third quartiles have nearly the same median uninsured rate, suggesting that having more middle-income residents doesn’t clearly correlate with a higher or lower uninsured share. This supports the idea that income alone doesn’t determine insurance coverage—other factors such as cost of living, Medicaid eligibility rules, and state-level policy differences play major roles.
-
-For example, two states may have similar income distributions, but very different uninsured rates due to differences in insurance affordability, healthcare access, or Medicaid expansion status (Davis, 2007; KFF, 2023). This makes it clear that middle-income presence is not a consistent predictor of how many people remain uninsured at the state level.
+This supports the premise that income alone does not determine insurance coverage. Other factors including cost of living, Medicaid eligibility requirements, and state-level policy differences play substantial roles. Two states may have similar income distributions yet vastly different uninsured rates due to variations in insurance affordability, healthcare access, or Medicaid expansion status (Davis, 2007; KFF, 2023).
 
 **Event Analysis Visualization, The Impact of The Implementation of Work Requirements for Medicaid in Arkansas, 2018**
 
-The graph shows the share of uninsured people in Arkansas compared to the national weighted average from 2010 to 2023, excluding Arkansas. Arkansas saw a sharp decline in its uninsured rate after expanding Medicaid under the Affordable Care Act, reaching a low around 2016–2017. However, after implementing work requirements for Medicaid in 2018, the trend reversed: the uninsured rate in Arkansas increased slightly, while the national average stayed low and stable.
+The graph shows uninsured share in Arkansas compared to the national weighted average from 2010 to 2023, excluding Arkansas. Arkansas experienced a sharp decline in uninsured rates after expanding Medicaid under the Affordable Care Act, reaching a low around 2016–2017. However, after implementing work requirements for Medicaid in 2018, this trend reversed: Arkansas's uninsured rate increased while the national average remained low and stable.
 
-This suggests the policy had a negative impact on coverage. Although the goal was to encourage employment, research shows many people lost coverage not because they were unwilling to work, but because of administrative hurdles and confusion about reporting (Sommers et al., 2019). As a result, thousands of eligible people were dropped from Medicaid, increasing the uninsured share.
-
-The work requirements likely influenced the y-axis variable, which is the percentage uninsured, by creating new barriers to maintaining insurance, especially for low-income adults.
+This suggests the policy negatively affected coverage. Although intended to encourage employment, research indicates many people lost coverage not due to unwillingness to work, but because of administrative barriers and confusion about reporting requirements (Sommers et al., 2019). Consequently, thousands of eligible individuals were removed from Medicaid, increasing the uninsured share. The work requirements likely influenced uninsured percentages by creating new obstacles to maintaining insurance coverage, particularly for low-income adults.
 
 # Part 4 – Communicate Findings
 
@@ -2135,23 +2129,7 @@ To summarize our key insights, the spatial variation analysis showed us that reg
 
 ## Key Policy Solutions
 
-Based on the analysis findings, four targeted policy interventions are recommended:
-
-### 1. Medicaid Expansion Incentives
-
-Provide enhanced federal funding to encourage remaining non-expansion states like Texas and Florida to adopt Medicaid expansion. The temporal analysis shows economic growth alone cannot close coverage gaps without policy action.
-
-### 2. Gig Economy Coverage Framework
-
-Develop portable benefits systems for independent contractors and part-time workers. Western states' elevated uninsured rates reflect changing labor markets that traditional employer-based coverage cannot address.
-
-### 3. Administrative Simplification
-
-Eliminate Medicaid work requirements and streamline enrollment processes. The Arkansas case study demonstrates that administrative barriers reverse coverage gains and disproportionately harm vulnerable populations.
-
-### 4. Targeted Affordability Support
-
-Expand premium subsidies beyond current income thresholds, as the middle-income analysis reveals that affordability challenges persist across income levels due to varying state costs and policies.
+Based on the analysis findings, four targeted policy interventions are recommended. First, enhanced federal funding should be provided to encourage remaining non-expansion states like Texas and Florida to adopt Medicaid expansion, as the temporal analysis demonstrates that economic growth alone cannot close coverage gaps without policy action. Second, portable benefits systems should be developed for independent contractors and part-time workers, since Western states' elevated uninsured rates reflect changing labor markets that traditional employer-based coverage cannot adequately address. Third, Medicaid work requirements should be eliminated and enrollment processes streamlined, as the Arkansas case study shows that administrative barriers reverse coverage gains and disproportionately harm vulnerable populations. Fourth, premium subsidies should be expanded beyond current income thresholds, since the middle-income analysis reveals that affordability challenges persist across income levels due to varying state costs and policies.
 
 # Appendix
 
@@ -2161,13 +2139,7 @@ Expand premium subsidies beyond current income thresholds, as the middle-income 
 -   KFF (2023). *Key Facts About the Uninsured Population*. <https://www.kff.org/uninsured/issue-brief/key-facts-about-the-uninsured-population/>
 -   Sommers, B. D., et al. (2019). *Medicaid Work Requirements—Results from the First Year in Arkansas*. *New England Journal of Medicine*, 381(11), 1073–1082. <https://doi.org/10.1056/NEJMsr1901772>
 -   Bailey, M. J., et al. (2017). *State Medicaid expansions and mortality, revisited: A cost-benefit analysis*. *American Journal of Health Economics*, 3(4), 392–421. <https://doi.org/10.1162/AJHE_a_00080>
-
-<!-- -->
-
 -   Collins, S. R., Gunja, M. Z., & Aboulafia, G. N. (2020). *U.S. health insurance coverage in 2020: A looming crisis in affordability*. *The Commonwealth Fund*.
-
-<!-- -->
-
 -   Sommers, B. D., Baicker, K., & Epstein, A. M. (2012). *Mortality and access to care among adults after state Medicaid expansions*. *New England Journal of Medicine*, 367(11), 1025–1034. <https://doi.org/10.1056/NEJMsa1202099>
 
 ## A.2 Session Info
